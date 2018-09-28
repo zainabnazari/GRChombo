@@ -12,7 +12,7 @@
 // Problem specific includes:
 #include "CCZ4.hpp"
 #include "Potential.hpp"
-#include "ScalarBubble.hpp"
+#include "OscillotonInitial.hpp "
 
 class SimulationParameters
 {
@@ -52,7 +52,7 @@ class SimulationParameters
 
     // Collection of parameters necessary for the CCZ4 RHS
     CCZ4::params_t ccz4_params;
-    ScalarBubble::params_t initial_params;
+    OscillotonInitial::params_t initial_params;
     Potential::params_t potential_params;
 };
 

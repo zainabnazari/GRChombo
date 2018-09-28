@@ -1,9 +1,9 @@
 #Params for runtime inputs
 
 verbosity = 0
-chk_prefix = ScalarField_
-plot_prefix = ScalarFieldp_
-restart_file = ScalarField_000030.3d.hdf5 
+chk_prefix = FreeScalarField_
+plot_prefix = FreeScalarFieldp_
+#restart_file = ScalarField_000030.3d.hdf5 
 
 # Set up grid spacings and regrid params
 # NB - the N values need to be multiples of block_factor
@@ -19,7 +19,7 @@ L =  64
 # Thresholds on the change across a cell which prompts regrid
 regrid_threshold = 0.5
 regrid_threshold_K = 0.2
-regrid_threshold_phi = 0.0005
+regrid_threshold_phi = 0.001
 
 # Level data
 # Maximum number of times you can regrid above coarsest level
@@ -47,7 +47,7 @@ num_ghosts = 3
 checkpoint_interval = 10
 plot_interval = 1
 dt_multiplier = 0.25
-stop_time = 30.0
+stop_time = 3.0
 max_steps = 10000000
 
 #Lapse evolution
