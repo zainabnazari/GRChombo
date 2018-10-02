@@ -3,6 +3,7 @@
 verbosity = 0
 chk_prefix = FreeScalarField_
 plot_prefix = FreeScalarFieldp_
+initial_data_prefix = Oscilloton_data_iso/
 #restart_file = ScalarField_000030.3d.hdf5 
 
 # Set up grid spacings and regrid params
@@ -18,8 +19,8 @@ L =  64
 # Regridding
 # Thresholds on the change across a cell which prompts regrid
 regrid_threshold = 0.5
-regrid_threshold_K = 0.2
-regrid_threshold_phi = 0.001
+regrid_threshold_chi = 0.5
+regrid_threshold_phi = 0.5
 
 # Level data
 # Maximum number of times you can regrid above coarsest level

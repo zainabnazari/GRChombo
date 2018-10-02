@@ -3,18 +3,17 @@
  * Please refer to LICENSE in GRChombo's root directory.
  */
 
-#ifndef OSCILLOTONPOTENTIAL_HPP_
-#define OSCILLOTONPOTENTIAL_HPP_
+#ifndef POTENTIAL_HPP_
+#define POTENTIAL_HPP_
 
 #include "simd.hpp"
 
-class OscillotonPotential
+class Potential
 {
   public:
     struct params_t
     {
         double scalar_mass;
-        double f_axion;
     };
 
   private:
@@ -22,7 +21,7 @@ class OscillotonPotential
 
   public:
     //! The constructor
-    OscillotonPotential(params_t a_params) : m_params(a_params) {}
+    Potential(params_t a_params) : m_params(a_params) {}
 
     //! Set the potential function for the scalar field here
     template <class data_t, template <typename> class vars_t>
@@ -30,15 +29,13 @@ class OscillotonPotential
                            const vars_t<data_t> &vars) const
     {
         // The potential value at phi
-        V_of_phi = pow(m_params.scalar_mass * m_params.f_axion, 2.0) *
-                   (1.0 - cos(vars.phi / m_params.f_axion));
-        // V_of_phi = 0.5 * pow(m_params.scalar_mass * vars.phi, 2.0);
+        // 1/2 m^2 phi^2
+        V_of_phi = 0.5 * pow(m_params.scalar_mass * vars.phi, 2.0);
 
         // The potential gradient at phi
-        dVdphi = m_params.f_axion * pow(m_params.scalar_mass, 2.0) *
-                 sin(vars.phi / m_params.f_axion);
-        // dVdphi = pow(m_params.scalar_mass, 2.0) * vars.phi;
+        // m^2 phi
+        dVdphi = pow(m_params.scalar_mass, 2.0) * vars.phi;
     }
 };
 
-#endif /* OSCILLOTONPOTENTIAL_HPP_ */
+#endif /* POTENTIAL_HPP_ */

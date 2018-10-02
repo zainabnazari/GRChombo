@@ -31,7 +31,6 @@ int runGRChombo(int argc, char *argv[])
                                                                   sim_params);
     setupAMRObject(gr_amr, scalar_field_level_fact);
 
-    // setup to run
     double stop_time;
     pp.get("stop_time", stop_time);
     int max_steps;
