@@ -24,7 +24,7 @@ regrid_threshold_phi = 0.5
 
 # Level data
 # Maximum number of times you can regrid above coarsest level
-max_level = 2 # There are (max_level+1) grids, so min is zero
+max_level = 0 # There are (max_level+1) grids, so min is zero
 # Frequency of regridding at each level
 # Need one for each level, ie max_level+1 items
 # Generally you do not need to regrid frequently on every level
@@ -79,7 +79,7 @@ sigma = 0.3
 # G_Newton = 1.0
 
 # SF Initial data
-amplitudeSF = 0.003
+amplitudeSF = 0.005
 widthSF = 1.0
 r_zero = 5.0
 scalar_mass = 0.001
