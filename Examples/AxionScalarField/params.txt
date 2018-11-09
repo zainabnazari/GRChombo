@@ -45,10 +45,10 @@ num_ghosts = 3
 # Set up time steps
 # dt will be dx*dt_multiplier on each grid level
 # HDF5files are written every dt = L/N*dt_multiplier*checkpoint_interval
-checkpoint_interval = 10
+checkpoint_interval = 2
 plot_interval = 1
-dt_multiplier = 0.25
-stop_time = 3.0
+dt_multiplier = 0.1
+stop_time = 20.0
 max_steps = 10000000
 
 #Lapse evolution
@@ -79,10 +79,11 @@ sigma = 0.3
 # G_Newton = 1.0
 
 # SF Initial data
-amplitudeSF = 0.003
-widthSF = 1.0
-r_zero = 5.0
-scalar_mass = 0.001
+#amplitudeSF = 0.003
+#widthSF = 1.0
+#r_zero = 5.0
+axion_mass = 1
+decay_constant = 0.06
 # SF parameter for bubble centre - defaulted to center of grid
 # so only uncomment if you want to place it off center
 #centerSF = 32 32 32
