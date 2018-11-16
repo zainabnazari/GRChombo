@@ -1,17 +1,40 @@
-#!/bin/bash
-#
-#SBATCH  -N 2
-#SBATCH  --ntasks-per-node=16 
-#SBATCH --cpus-per-task=1
-#SBATCH  --time=04:00:00 
-#SBATCH  --partition long
-
-module purge
-module load gcc/4.9.0
-module load gnu/openmpi/1.10.6
-module load gnu-openmpi/phdf5/1.8.17
-module load intel/2016
-module load intel-mkl/2017
-# add here you command line to run a parallel job
-export OMP_NUM_THREADS=1
-mpirun ./Main_ScalarField3d.Linux.64.mpicxx.ifort.DEBUG.OPT.MPI.ex params.txt
+#!/bin/bash -l
+echo =========================================================   
+echo Job submitted  date = Fri Nov 16 14:29:24 GMT 2018      
+date_start=`date +%s`
+echo $SLURM_JOB_NUM_NODES nodes \( $SMP processes per node \)        
+echo $SLURM_JOB_NUM_NODES hosts used: $SLURM_JOB_NODELIST      
+echo Job output begins                                           
+echo -----------------                                           
+echo   
+#hostname
+#ulimit -l
+#which mpirun
+export OMP_NUM_THREADS=12
+ nice -n 10 /mnt/zfsusers/kclough/ForkedGRC/GRChombo/Examples/AxionCollapse/./jobscript 
+# If we've been checkpointed
+#if [ -n "${DMTCP_CHECKPOINT_DIR}" ]; then
+  if [ -d "${DMTCP_CHECKPOINT_DIR}" ]; then
+#    echo -n "Job was checkpointed at "
+#    date
+#    echo 
+     sleep 1
+#  fi
+   echo -n
+else
+  echo ---------------                                           
+  echo Job output ends                                           
+  date_end=`date +%s`
+  seconds=$((date_end-date_start))
+  minutes=$((seconds/60))
+  seconds=$((seconds-60*minutes))
+  hours=$((minutes/60))
+  minutes=$((minutes-60*hours))
+  echo =========================================================   
+  echo PBS job: finished   date = `date`   
+  echo Total run time : $hours Hours $minutes Minutes $seconds Seconds
+  echo =========================================================
+fi
+if [ ${SLURM_NTASKS} -eq 1 ]; then
+  rm -f $fname
+fi
