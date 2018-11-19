@@ -37,6 +37,7 @@ class SimulationParameters : public SimulationParametersBase
         // Initial and SF data
         pp.load("initial_data_prefix", initial_data_prefix);
         pp.load("scalar_mass", scalar_mass);
+	pp.load("G_Newton", G_Newton, 1.0);
 
         // for the regridding
         pp.load("regrid_threshold_phi", regrid_threshold_phi);

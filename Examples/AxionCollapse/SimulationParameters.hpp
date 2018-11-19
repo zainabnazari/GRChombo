@@ -39,6 +39,7 @@ class SimulationParameters : public SimulationParametersBase
         pp.load("initial_data_prefix", initial_data_prefix);
         pp.load("axion_mass", axion_mass);
 	pp.load("decay_constant", decay_constant);
+	pp.load("G_Newton", G_Newton, 1.0);
 
         // for the regridding
         pp.load("regrid_threshold_phi", regrid_threshold_phi);
