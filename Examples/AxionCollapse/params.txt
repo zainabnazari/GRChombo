@@ -4,7 +4,7 @@ verbosity = 0
 chk_prefix = AxionCollapse_
 plot_prefix = AxionCollapseP_
 initial_data_prefix = Oscilloton_data_iso/
-#restart_file = AxionCollapse_006000.3d.hdf5  
+restart_file = AxionCollapse_000900.3d.hdf5  
 
 # Set up grid spacings and regrid params
 # NB - the N values need to be multiples of block_factor
@@ -19,8 +19,8 @@ L = 128
 # Regridding
 # Thresholds on the change across a cell which prompts regrid
 regrid_threshold = 0.5
-regrid_threshold_chi = 0.5
-regrid_threshold_phi = 0.5
+regrid_threshold_chi = 0.85
+regrid_threshold_phi = 0.85
 
 # Level data
 # Maximum number of times you can regrid above coarsest level
@@ -32,7 +32,7 @@ regrid_interval = 64 32 16 16 16 16 16
 # Max box size
 max_grid_size = 16
 # Min box size
-block_factor = 8
+block_factor = 16
 
 # Set up time steps
 # dt will be dx*dt_multiplier on each grid level

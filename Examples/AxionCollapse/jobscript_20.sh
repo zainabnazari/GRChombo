@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH -N 10
-#SBATCH --ntasks-per-node=16
+#SBATCH --ntasks-per-node=20
 #SBATCH --cpus-per-task=1
 #SBATCH --constraint="ivybridge-ep"
 #SBATCH --time=10:00:00 

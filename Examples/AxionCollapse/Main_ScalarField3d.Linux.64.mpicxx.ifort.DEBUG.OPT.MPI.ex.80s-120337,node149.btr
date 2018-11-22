@@ -1,0 +1,14 @@
+
+Main_ScalarField3d.Linux.64.mpicxx.ifort.DEBUG.OPT.MPI.ex:120337 terminated with signal 6 at PC=2addd50ac1f7 SP=7ffd42dfcaa8.  Backtrace:
+/usr/lib64/libc.so.6(gsignal+0x37)[0x2addd50ac1f7]
+/usr/lib64/libc.so.6(abort+0x148)[0x2addd50ad8e8]
+./Main_ScalarField3d.Linux.64.mpicxx.ifort.DEBUG.OPT.MPI.ex[0x53351b]
+/opt/ohpc/pub/libs/gnu/openmpi/hdf5/1.8.17/lib/libhdf5.so.10(H5E_dump_api_stack+0x40)[0x2addce8850c0]
+/opt/ohpc/pub/libs/gnu/openmpi/hdf5/1.8.17/lib/libhdf5.so.10(H5Fopen+0x11e)[0x2addce88652e]
+./Main_ScalarField3d.Linux.64.mpicxx.ifort.DEBUG.OPT.MPI.ex[0x52fc29]
+./Main_ScalarField3d.Linux.64.mpicxx.ifort.DEBUG.OPT.MPI.ex[0x52fa88]
+./Main_ScalarField3d.Linux.64.mpicxx.ifort.DEBUG.OPT.MPI.ex[0x409409]
+./Main_ScalarField3d.Linux.64.mpicxx.ifort.DEBUG.OPT.MPI.ex[0x408ad9]
+./Main_ScalarField3d.Linux.64.mpicxx.ifort.DEBUG.OPT.MPI.ex[0x408581]
+/usr/lib64/libc.so.6(__libc_start_main+0xf5)[0x2addd5098c05]
+./Main_ScalarField3d.Linux.64.mpicxx.ifort.DEBUG.OPT.MPI.ex[0x408329]
