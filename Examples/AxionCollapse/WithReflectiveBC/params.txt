@@ -8,9 +8,9 @@ initial_data_prefix = ../Oscilloton_data_iso/
 
 # Set up grid spacings and regrid params
 # NB - the N values need to be multiples of block_factor
-N1 = 32
-N2 = 32
-N3 = 32
+N1 = 64
+N2 = 64
+N3 = 64
 
 # Length of longest box side, dx_coarsest = L/N(max)
 # NB if non cubic, this determines dx for all sides
@@ -19,8 +19,8 @@ L = 64
 # Regridding
 # Thresholds on the change across a cell which prompts regrid
 regrid_threshold = 0.5
-regrid_threshold_chi = 0.6
-regrid_threshold_phi = 0.6
+regrid_threshold_chi = 0.5
+regrid_threshold_phi = 0.5
 
 # Level data
 # Maximum number of times you can regrid above coarsest level
@@ -28,11 +28,11 @@ max_level = 6 # There are (max_level+1) grids, so min is zero
 # Frequency of regridding at each level
 # Need one for each level, ie max_level+1 items
 # Generally you do not need to regrid frequently on every level
-regrid_interval = 64 32 16 16 16 16 16
+regrid_interval = 16 16 16 16 16 16 16
 # Max box size
 max_grid_size = 16
 # Min box size
-block_factor = 8
+block_factor = 16
 
 #Periodic directions - 0 = false, 1 = true
 isPeriodic = 0 0 0
