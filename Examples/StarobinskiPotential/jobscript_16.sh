@@ -3,7 +3,7 @@
 #SBATCH --ntasks-per-node=16
 #SBATCH --cpus-per-task=1
 #SBATCH --constraint="sandybridge-ep"
-#SBATCH --time=10:00:00 
+#SBATCH --time=24:00:00 
 #SBATCH --partition long
 
 module purge

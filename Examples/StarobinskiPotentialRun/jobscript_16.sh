@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH -N 10
+#SBATCH -N 4
 #SBATCH --ntasks-per-node=16
 #SBATCH --cpus-per-task=1
 #SBATCH --constraint="sandybridge-ep"

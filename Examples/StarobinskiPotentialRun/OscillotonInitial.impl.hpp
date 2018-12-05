@@ -36,7 +36,6 @@ void OscillotonInitial::compute(Cell<double> current_cell) const
         (rr / m_spacing - indxL) * (m_psi_values[indxH] - m_psi_values[indxL]);
 
     // assign value of chi
-    //vars.phi=4.1083;
     vars.chi = pow(psi, -4.0);
     FOR1(i) {vars.h[i][i]=1.0;}
 

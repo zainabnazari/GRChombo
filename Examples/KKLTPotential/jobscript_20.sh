@@ -1,9 +1,9 @@
 #!/bin/bash
-#SBATCH -N 10
+#SBATCH -N 2
 #SBATCH --ntasks-per-node=20
 #SBATCH --cpus-per-task=1
 #SBATCH --constraint="ivybridge-ep"
-#SBATCH --time=10:00:00 
+#SBATCH --time=24:00:00 
 #SBATCH --partition long
 
 module purge
