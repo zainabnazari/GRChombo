@@ -71,7 +71,7 @@ G_Newton = 1.0
 
 # SF Initial data
 overall_normalization = 1.0
-decay_constant = 3.14159
+decay_constant = 1.0
 
 #Periodic directions - 0 = false, 1 = true
 isPeriodic = 0 0 0

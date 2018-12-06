@@ -1,10 +1,10 @@
 #Params for runtime inputs
 
 verbosity = 0
-chk_prefix = Starobinski_f1_m1_
-plot_prefix = Starobinski_f1_m1_P_
+chk_prefix = Starobinski_phi04_a1_
+plot_prefix = Starobinski_phi04_a1_P_
 initial_data_prefix = Oscilloton_data_iso/
-#restart_file = Starobinski_f1_m1_001100.3d.hdf5 
+#restart_file = Starobinski_phi04_a1_001100.3d.hdf5 
 
 # Set up grid spacings and regrid params
 # NB - the N values need to be multiples of block_factor
@@ -19,8 +19,8 @@ L = 64
 # Regridding
 # Thresholds on the change across a cell which prompts regrid
 regrid_threshold = 0.5
-regrid_threshold_chi = 0.75
-regrid_threshold_phi = 0.75
+regrid_threshold_chi = 1.0
+regrid_threshold_phi = 1.0
 
 # Level data
 # Maximum number of times you can regrid above coarsest level
@@ -71,7 +71,7 @@ G_Newton = 1.0
 
 # SF Initial data
 overall_normalization = 1.0
-decay_constant = 3.14159
+decay_constant = 1.0
 
 #Periodic directions - 0 = false, 1 = true
 isPeriodic = 0 0 0

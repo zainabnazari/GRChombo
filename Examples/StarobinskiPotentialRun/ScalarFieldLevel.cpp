@@ -85,7 +85,7 @@ void ScalarFieldLevel::initialData()
 }
 
 // Things to do before outputting a checkpoint file
-void ScalarFieldLevel::preCheckpointLevel()
+void ScalarFieldLevel::prePlotLevel()
 {
     fillAllGhosts();
     Potential potential(m_p.potential_params);
@@ -130,7 +130,7 @@ void ScalarFieldLevel::specificUpdateODE(GRLevelData &a_soln,
 void ScalarFieldLevel::specificWritePlotHeader(
     std::vector<int> &plot_states) const
 {
-    plot_states = {c_phi, c_chi};//, c_lapse
+    plot_states = {c_phi, c_chi, c_lapse, c_Ham};
 //};
 }
 
