@@ -65,9 +65,9 @@ class OscillotonTaggingCriterion
                           (1e-2 + abs(d1chi.chi[idir] * d1chi.chi[jdir]));
 
             mod_d2_phi += d2.Pi[idir][jdir] * d2.Pi[idir][jdir] /
-                              (abs(d1.Pi[idir] * d1.Pi[jdir]) + 3e-6) +
+                              (abs(d1.Pi[idir] * d1.Pi[jdir]) + 1e-3) +
                           d2.phi[idir][jdir] * d2.phi[idir][jdir] /
-                              (abs(d1.phi[idir] * d1.phi[jdir]) + 3e-6);
+                              (abs(d1.phi[idir] * d1.phi[jdir]) + 1e-3);
         }
 
         data_t criterion_chi = m_dx / m_threshold_chi * sqrt(mod_d2_chi);
