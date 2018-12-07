@@ -19,8 +19,8 @@ L = 64
 # Regridding
 # Thresholds on the change across a cell which prompts regrid
 regrid_threshold = 0.5
-regrid_threshold_chi = 0.75
-regrid_threshold_phi = 0.75
+regrid_threshold_chi = 0.4
+regrid_threshold_phi = 0.4
 
 # Level data
 # Maximum number of times you can regrid above coarsest level
