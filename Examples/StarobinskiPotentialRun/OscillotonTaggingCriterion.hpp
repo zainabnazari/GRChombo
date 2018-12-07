@@ -21,6 +21,7 @@ class OscillotonTaggingCriterion
     const FourthOrderDerivatives m_deriv;
     const double m_threshold_chi;
     const double m_threshold_phi;
+    const double m_cutoff_phi;
     const int m_level;
     const extraction_params_t m_params;
 
@@ -44,9 +45,10 @@ class OscillotonTaggingCriterion
   public:
     OscillotonTaggingCriterion(
         const double dx, const double threshold_chi, const double threshold_phi,
+        const double cutoff_phi,
         const int a_level, const extraction_params_t a_params)
         : m_dx(dx), m_deriv(dx), m_threshold_chi(threshold_chi),
-          m_threshold_phi(threshold_phi), m_params(a_params),
+          m_cutoff_phi(cutoff_phi), m_threshold_phi(threshold_phi), m_params(a_params),
           m_level(a_level){};
 
     template <class data_t> void compute(Cell<data_t> current_cell) const
@@ -65,9 +67,9 @@ class OscillotonTaggingCriterion
                           (1e-2 + abs(d1chi.chi[idir] * d1chi.chi[jdir]));
 
             mod_d2_phi += d2.Pi[idir][jdir] * d2.Pi[idir][jdir] /
-                              (abs(d1.Pi[idir] * d1.Pi[jdir]) + 1e-3) +
+                              (abs(d1.Pi[idir] * d1.Pi[jdir]) + m_cutoff_phi) +
                           d2.phi[idir][jdir] * d2.phi[idir][jdir] /
-                              (abs(d1.phi[idir] * d1.phi[jdir]) + 1e-3);
+                              (abs(d1.phi[idir] * d1.phi[jdir]) + m_cutoff_phi);
         }
 
         data_t criterion_chi = m_dx / m_threshold_chi * sqrt(mod_d2_chi);

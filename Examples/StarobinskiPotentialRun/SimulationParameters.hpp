@@ -39,16 +39,20 @@ class SimulationParameters : public SimulationParametersBase
         pp.load("initial_data_prefix", initial_data_prefix);
         pp.load("overall_normalization", overall_normalization);
 	pp.load("decay_constant", decay_constant);
+	pp.load("sign_of_Pi", sign_of_Pi, -1);
 	pp.load("G_Newton", G_Newton, 1.0);
 
         // for the regridding
+        pp.load("regrid_cutoff_phi", regrid_cutoff_phi, 1e-3);
         pp.load("regrid_threshold_phi", regrid_threshold_phi);
         pp.load("regrid_threshold_chi", regrid_threshold_chi);
     }
 
     // Initial data for potential
     double G_Newton;
-    double overall_normalization, decay_constant, regrid_threshold_chi, regrid_threshold_phi;
+    double overall_normalization, decay_constant;
+    double regrid_cutoff_phi, regrid_threshold_chi, regrid_threshold_phi;
+    int sign_of_Pi;
 
     // location of data for the oscilloton profile in isotropic coords
     std::string initial_data_prefix;
