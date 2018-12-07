@@ -39,7 +39,7 @@ class SimulationParameters : public SimulationParametersBase
         pp.load("initial_data_prefix", initial_data_prefix);
         pp.load("overall_normalization", overall_normalization);
 	pp.load("decay_constant", decay_constant);
-	pp.load("sign_of_Pi", sign_of_Pi, -1);
+	pp.load("sign_of_Pi", sign_of_Pi, 1);
 	pp.load("G_Newton", G_Newton, 1.0);
 
         // for the regridding

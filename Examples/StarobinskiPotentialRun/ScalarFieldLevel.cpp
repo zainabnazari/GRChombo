@@ -13,8 +13,9 @@
 // For RHS update
 #include "MatterCCZ4.hpp"
 
-// For constraints calculation
+// For constraints calculation and AH finder
 #include "MatterConstraints.hpp"
+#include "SphericalHorizon.hpp"
 
 // For tag cells
 #include "OscillotonTaggingCriterion.hpp"
@@ -95,6 +96,14 @@ void ScalarFieldLevel::prePlotLevel()
                    m_state_new, m_state_new, EXCLUDE_GHOST_CELLS);
 }
 
+// Things to do before outputting a checkpoint file
+void ScalarFieldLevel::preCheckpointLevel()
+{
+    fillAllGhosts();
+    BoxLoops::loop(SphericalHorizon(m_dx, m_p.center),
+                   m_state_new, m_state_new, EXCLUDE_GHOST_CELLS);
+}
+
 // Things to do in RHS update, at each RK4 step
 void ScalarFieldLevel::specificEvalRHS(GRLevelData &a_soln, GRLevelData &a_rhs,
                                        const double a_time)
@@ -131,14 +140,13 @@ void ScalarFieldLevel::specificWritePlotHeader(
     std::vector<int> &plot_states) const
 {
     plot_states = {c_phi, c_chi, c_lapse, c_Ham};
-//};
 }
 
 void ScalarFieldLevel::computeTaggingCriterion(FArrayBox &tagging_criterion,
                                                const FArrayBox &current_state)
 {
-    BoxLoops::loop(OscillotonTaggingCriterion(m_dx, m_p.regrid_threshold_chi, m_p.regrid_cutoff_phi, 
-                                              m_p.regrid_threshold_phi, m_level,
+    BoxLoops::loop(OscillotonTaggingCriterion(m_dx, m_p.regrid_threshold_chi, m_p.regrid_threshold_phi, 
+                                              m_p.regrid_cutoff_phi, m_level,
                                               m_p.extraction_params),
                    current_state, tagging_criterion);
 }
