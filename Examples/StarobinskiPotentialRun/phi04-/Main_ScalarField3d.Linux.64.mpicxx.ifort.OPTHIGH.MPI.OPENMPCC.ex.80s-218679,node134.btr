@@ -1,0 +1,14 @@
+
+Main_ScalarField3d.Linux.64.mpicxx.ifort.OPTHIGH.MPI.OPENMPC:218679 terminated with signal 6 at PC=2b1a91d561f7 SP=7fffa44d9718.  Backtrace:
+/usr/lib64/libc.so.6(gsignal+0x37)[0x2b1a91d561f7]
+/usr/lib64/libc.so.6(abort+0x148)[0x2b1a91d578e8]
+./../Main_ScalarField3d.Linux.64.mpicxx.ifort.OPTHIGH.MPI.OPENMPCC.ex[0x5271eb]
+/opt/ohpc/pub/libs/gnu/openmpi/hdf5/1.8.17/lib/libhdf5.so.10(H5E_dump_api_stack+0x40)[0x2b1a8b52f0c0]
+/opt/ohpc/pub/libs/gnu/openmpi/hdf5/1.8.17/lib/libhdf5.so.10(H5Fopen+0x11e)[0x2b1a8b53052e]
+./../Main_ScalarField3d.Linux.64.mpicxx.ifort.OPTHIGH.MPI.OPENMPCC.ex[0x523e97]
+./../Main_ScalarField3d.Linux.64.mpicxx.ifort.OPTHIGH.MPI.OPENMPCC.ex[0x523d1c]
+./../Main_ScalarField3d.Linux.64.mpicxx.ifort.OPTHIGH.MPI.OPENMPCC.ex[0x40940a]
+./../Main_ScalarField3d.Linux.64.mpicxx.ifort.OPTHIGH.MPI.OPENMPCC.ex[0x408af9]
+./../Main_ScalarField3d.Linux.64.mpicxx.ifort.OPTHIGH.MPI.OPENMPCC.ex[0x408451]
+/usr/lib64/libc.so.6(__libc_start_main+0xf5)[0x2b1a91d42c05]
+./../Main_ScalarField3d.Linux.64.mpicxx.ifort.OPTHIGH.MPI.OPENMPCC.ex[0x408209]
