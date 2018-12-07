@@ -21,7 +21,7 @@ L = 64
 regrid_threshold = 0.5
 regrid_threshold_chi = 0.4
 regrid_threshold_phi = 0.4
-regrid_cutoff_phi = 1e-4
+regrid_cutoff_phi = 0.5e-4
 
 # Level data
 # Maximum number of times you can regrid above coarsest level

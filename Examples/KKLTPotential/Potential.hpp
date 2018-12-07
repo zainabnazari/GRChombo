@@ -31,9 +31,9 @@ class Potential
     {
         // The potential value at phi
         // V = 
-        double phi_min = 4.1083300300917;
-        V_of_phi = modulus_params.overall_normalization * (2.9734321228507536 * 
-                                  pow(10.0,-9.0) * exp(-2.0*sqrt(3.0)*(phi_min + vars.phi)) 
+        double phi_min = 1.428314650033344;
+        V_of_phi = modulus_params.overall_normalization * (4.868172392485633 * 
+                                  pow(10.0,-11.0) * exp(-4.0*sqrt(3.0)*(phi_min + vars.phi)) 
                  + 0.05 * exp( - 0.1*exp((2.0*(phi_min + vars.phi))/sqrt(3.0)) 
                             - (4.0*(phi_min + vars.phi))/sqrt(3.0))
                         * (- 0.0001 + exp(-0.1*exp((2.0*(phi_min + vars.phi))/sqrt(3.0))) 

@@ -20,8 +20,7 @@ void SphericalHorizon::compute(Cell<data_t> current_cell) const
     data_t out = calculate_expansion(vars, d1, coords);
 
     // Write the rhs into the output FArrayBox
-    current_cell.store_vars(out, c_Mom3);
-    //current_cell.store_vars(out, c_Omega);
+    current_cell.store_vars(out, c_Omega);
 }
 
 template <class data_t>
