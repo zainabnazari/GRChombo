@@ -1,16 +1,16 @@
 #Params for runtime inputs
 
 verbosity = 0
-chk_prefix = Starobinski_phi04p_a1_
-plot_prefix = Starobinski_phi04p_a1_P_
+chk_prefix = Starobinski_phi04plr_a1_
+plot_prefix = Starobinski_phi04plr_a1_P_
 initial_data_prefix = Oscilloton_data_iso/
-#restart_file = Starobinski_phi04p_a1_001250.3d.hdf5 
+#restart_file = Starobinski_phi04plr_a1_001250.3d.hdf5 
 
 # Set up grid spacings and regrid params
 # NB - the N values need to be multiples of block_factor
-N1 = 16
-N2 = 16
-N3 = 16
+N1 = 24
+N2 = 24
+N3 = 24
 
 # Length of longest box side, dx_coarsest = L/N(max)
 # NB if non cubic, this determines dx for all sides
@@ -20,8 +20,8 @@ L = 64
 # Thresholds on the change across a cell which prompts regrid
 regrid_threshold = 0.5
 regrid_threshold_chi = 0.8
-regrid_threshold_phi = 0.8
-regrid_cutoff_phi = 1e-3
+regrid_threshold_phi = 1.2
+regrid_cutoff_phi = 5e-5
 
 # Level data
 # Maximum number of times you can regrid above coarsest level
@@ -41,7 +41,7 @@ block_factor = 8
 checkpoint_interval = 25
 plot_interval = 1
 dt_multiplier = 0.2
-stop_time = 1000.0
+stop_time = 1500.0
 max_steps = 10000000
 
 #Lapse evolution

@@ -2,13 +2,15 @@
 N1 = 32
 N2 = 32
 N3 = 32
-checkpoint_interval = 1
+checkpoint_interval = 50
 start_file = 0
 num_files = 3
 base_dx = 0.2 #probably needs to be at least 3 times dx_min
 num_points = 100 # number of points in radial direction
-chk_prefix = /home/fmuia/GRChombo/Examples/TemporaryStorage/StarobinskiPotential/phi048/Starobinski_phi048_a1_P_
-restart_file = /home/fmuia/GRChombo/Examples/TemporaryStorage/StarobinskiPotential/phi048/Starobinski_phi048_a1_P_000001.3d.hdf5
+chk_prefix = /home/fmuia/GRChombo/Examples/TemporaryStorage/StarobinskiPotential/phi048/Starobinski_phi048_a1_
+#chk_prefix = /home/fmuia/GRChombo/Examples/TemporaryStorage/StarobinskiPotential/phi048/Starobinski_phi048_a1_P_
+#restart_file = /home/fmuia/GRChombo/Examples/TemporaryStorage/StarobinskiPotential/phi048/Starobinski_phi048_a1_P_000001.3d.hdf5
+restart_file = /home/fmuia/GRChombo/Examples/TemporaryStorage/StarobinskiPotential/phi048/Starobinski_phi048_a1_000000.3d.hdf5
 
 # PROBABLY DONT NEED TO CHANGE FROM HERE
 # Physical length of grid, number of levels and number of extraction pts

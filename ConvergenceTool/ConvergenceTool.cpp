@@ -66,7 +66,7 @@ int runConvergenceTool(int argc, char *argv[])
     // set up number of extraction points and variables to extract
     int num_points = 5;
     pp.query("num_points", num_points);
-    int var1 = c_chi;
+    int var1 = c_phi;
 //    int var2 = c_phi;
 
     // The base value is often zero - so all levels are interpolated to the

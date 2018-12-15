@@ -9,7 +9,7 @@
 // assign an enum to each variable
 enum
 {
-    c_chi,
+//    c_chi,
 
     c_h11,
     c_h12,
@@ -33,7 +33,7 @@ enum
     c_Gamma2,
     c_Gamma3,
 
-    c_lapse,
+//    c_lapse,
 
     c_shift1,
     c_shift2,
@@ -43,15 +43,27 @@ enum
     c_B2,
     c_B3,
 
-    c_phi, // matter field added
+//    c_phi, // matter field added
     c_Pi,  //(minus) conjugate momentum
 
-    c_Ham,
-    //c_Omega,
+//    c_Ham,
+    c_Omega,
 
     c_Mom1,
     c_Mom2,
     c_Mom3,
+
+    NUM_VARS_ALL
+};
+
+
+// assign an enum to each variable
+enum
+{
+    c_phi,
+    c_chi,
+    c_lapse,
+    c_Ham,
 
     NUM_VARS
 };
@@ -59,7 +71,7 @@ enum
 namespace UserVariables
 {
 static constexpr char const *variable_names[NUM_VARS] = {
-    "chi",
+/*    "chi",
 
     "h11",    "h12",    "h13",    "h22", "h23", "h33",
 
@@ -79,9 +91,11 @@ static constexpr char const *variable_names[NUM_VARS] = {
 
     "phi",    "Pi",
 
-    "Ham", //    "Omega",    
+    "Ham" //,    "Omega",    
 
     "Mom1",   "Mom2",   "Mom3"};
+*/
+    "phi",    "chi",   "lapse",  "Ham"};
 
 }
 

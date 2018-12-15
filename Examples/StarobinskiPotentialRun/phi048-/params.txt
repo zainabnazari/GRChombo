@@ -41,7 +41,7 @@ block_factor = 8
 checkpoint_interval = 50
 plot_interval = 1
 dt_multiplier = 0.2
-stop_time = 1000.0
+stop_time = 300.0
 max_steps = 10000000
 
 #Lapse evolution
