@@ -55,19 +55,11 @@ int runConvergenceTool(int argc, char *argv[])
     DefaultLevelFactory<EmptyLevel> empty_level_fact(gr_amr, sim_params);
     setupAMRObject(gr_amr, empty_level_fact);
 
-    // Setup the AMRInterpolator quantities
-    auto dx_scalar = GRAMRLevel::gr_cast(gr_amr.getAMRLevels()[0])
-                         ->get_dx(); // coarsest grid spacing
-    std::array<double, CH_SPACEDIM> dx;
-    dx.fill(dx_scalar);
-    std::array<double, CH_SPACEDIM> origin;
-    origin.fill(dx_scalar / 2.0);
-
     // set up number of extraction points and variables to extract
     int num_points = 5;
     pp.query("num_points", num_points);
-    int var1 = c_phi;
-//    int var2 = c_phi;
+    int var1 = c_chi;
+    int var2 = c_phi;
 
     // The base value is often zero - so all levels are interpolated to the
     // corner point
@@ -75,7 +67,7 @@ int runConvergenceTool(int argc, char *argv[])
     pp.query("base_dx", base_dx);
 
     std::unique_ptr<double[]> var1_ptr{new double[num_points]};
-//    std::unique_ptr<double[]> var2_ptr{new double[num_points]};
+    std::unique_ptr<double[]> var2_ptr{new double[num_points]};
     std::unique_ptr<double[]> interp_x{new double[num_points]};
     std::unique_ptr<double[]> interp_y{new double[num_points]};
     std::unique_ptr<double[]> interp_z{new double[num_points]};
@@ -93,12 +85,11 @@ int runConvergenceTool(int argc, char *argv[])
     query.setCoords(0, interp_x.get())
         .setCoords(1, interp_y.get())
         .setCoords(2, interp_z.get())
-        .addComp(var1, var1_ptr.get());
-//        .addComp(var2, var2_ptr.get());
+        .addComp(var1, var1_ptr.get())
+        .addComp(var2, var2_ptr.get());
 
     // now the interpolator object, can choose up to 4th order
-    // AMRInterpolator<Lagrange<2>> interpolator(gr_amr, origin, dx, 2);
-    AMRInterpolator<Lagrange<4>> interpolator(gr_amr, origin, dx, 2);
+    AMRInterpolator<Lagrange<4>> interpolator(gr_amr, sim_params.origin, sim_params.dx, 2);
 
     // now loop over chk files
     for (int ifile = sim_params.start_file; ifile < sim_params.num_files;
@@ -109,7 +100,7 @@ int runConvergenceTool(int argc, char *argv[])
         std::ostringstream current_file;
         current_file << std::setw(6) << std::setfill('0')
                      << ifile * sim_params.checkpoint_interval;
-        std::string restart_file(sim_params.chk_prefix + current_file.str() +
+        std::string restart_file(sim_params.checkpoint_prefix + current_file.str() +
                                  ".3d.hdf5");
         pout() << " restart file name " << restart_file << endl;
         HDF5Handle handle(restart_file, HDF5Handle::OPEN_RDONLY);
@@ -138,8 +129,8 @@ int runConvergenceTool(int argc, char *argv[])
                     sim_params.checkpoint_interval * ifile);
             char comp_str1[20];
             sprintf(comp_str1, UserVariables::variable_names[var1]);
-//            char comp_str2[20];
-//            sprintf(comp_str2, UserVariables::variable_names[var2]);
+            char comp_str2[20];
+            sprintf(comp_str2, UserVariables::variable_names[var2]);
 
             ofstream outfile;
             outfile.open(file_str);
@@ -154,8 +145,8 @@ int runConvergenceTool(int argc, char *argv[])
             outfile << "#" << std::setw(19) << "x";
             outfile << std::setw(20) << "y";
             outfile << std::setw(20) << "z";
-            outfile << std::setw(20) << comp_str1 << endl;
-//            outfile << std::setw(20) << comp_str2 << endl;
+            outfile << std::setw(20) << comp_str1; //<< endl;
+            outfile << std::setw(20) << comp_str2 << endl;
 
             // data itself
             for (int ir = 0; ir < num_points; ++ir)
@@ -164,9 +155,9 @@ int runConvergenceTool(int argc, char *argv[])
                 outfile << std::setw(20) << interp_y[ir];
                 outfile << std::setw(20) << interp_z[ir];
                 outfile << std::setw(20) << std::setprecision(9)
-                        << var1_ptr[ir] << endl;
-//                outfile << std::setw(20) << std::setprecision(9)
-//                        << var2_ptr[ir] << endl;
+                        << var1_ptr[ir]; // << endl;
+                outfile << std::setw(20) << std::setprecision(9)
+                        << var2_ptr[ir] << endl;
             }
             outfile.close();
         }

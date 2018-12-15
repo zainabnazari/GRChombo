@@ -739,7 +739,14 @@ void GRAMRLevel::writePlotLevel(HDF5Handle &a_handle) const
 
         // Write the data for this level
         write(a_handle, levelGrids);
-        write(a_handle, plot_data, "data");
+        //write(a_handle, plot_data, "data");
+
+        IntVect ghost_vector = IntVect::Zero;
+        if(m_p.nonperiodic_boundaries_exist)
+        {
+            ghost_vector = m_num_ghosts*IntVect::Unit;
+        }
+        write(a_handle, plot_data, "data", ghost_vector);
     }
 }
 
