@@ -8,13 +8,13 @@
 
 // General includes
 #include "GRParmParse.hpp"
-#include "SimulationParametersBase.hpp"
+#include "ChomboParameters.hpp"
 
-class SimulationParameters : public SimulationParametersBase
+class SimulationParameters : public ChomboParameters
 {
   public:
     // For the Interpolator test we don't need many parameters
-    SimulationParameters(GRParmParse &pp) : SimulationParametersBase(pp)
+    SimulationParameters(GRParmParse &pp) : ChomboParameters(pp)
     {
         // read the problem specific params
         readParams(pp);
@@ -22,27 +22,19 @@ class SimulationParameters : public SimulationParametersBase
 
     void readParams(GRParmParse &pp)
     {
-        pp.get("verbosity", verbosity);
         // Grid setup
-        pp.get("L", L);
-        pp.getarr("isPeriodic", isPeriodic, 0, SpaceDim);
-        pp.get("num_ghosts", num_ghosts);
         pp.get("num_files", num_files);
         pp.get("start_file", start_file);
         pp.get("checkpoint_interval", checkpoint_interval);
-        pp.get("chk_prefix", chk_prefix);
-        pp.get("dt_multiplier", dt_multiplier);
-        pp.get("tag_buffer_size", tag_buffer_size);
+
+        // extraction params
+        dx.fill(coarsest_dx);
+        origin.fill(coarsest_dx / 2.0);
     }
-    int verbosity;
-    std::string chk_prefix;
-    Real L; // Physical sidelength of the grid
-    int num_ghosts, num_files, start_file, checkpoint_interval;
-    std::vector<bool> isPeriodic;
-    double regrid_threshold = 0.5;
-    int tag_buffer_size;
-    bool ignore_checkpoint_name_mismatch = false;
-    double dt_multiplier; // Doesn't matter for this test
+
+    int num_files, start_file, checkpoint_interval;
+    std::array<double, CH_SPACEDIM> origin,
+        dx; // location of coarsest origin and dx
 };
 
 #endif /* SIMULATIONPARAMETERS_HPP_ */
