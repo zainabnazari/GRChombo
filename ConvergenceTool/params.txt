@@ -5,9 +5,9 @@ N3 = 32
 
 checkpoint_interval = 1
 start_file = 0
-num_files = 3
+num_files = 10
 
-base_dx = 10 #probably needs to be at least 3 times dx_min
+base_dx = 2.0 #probably needs to be at least 3 times dx_min
 num_points = 1 # number of points in radial direction
 
 chk_prefix =/mnt/zfsusers/kclough/ForkedGRC/GRChombo/Examples/StarobinskiPotentialRun/KCTest0.4/Starobinski_f1_m1_P_

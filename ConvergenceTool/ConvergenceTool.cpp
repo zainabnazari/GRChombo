@@ -89,7 +89,7 @@ int runConvergenceTool(int argc, char *argv[])
         .addComp(var2, var2_ptr.get());
 
     // now the interpolator object, can choose up to 4th order
-    AMRInterpolator<Lagrange<2>> interpolator(gr_amr, sim_params.origin, sim_params.dx, 2);
+    AMRInterpolator<Lagrange<4>> interpolator(gr_amr, sim_params.origin, sim_params.dx, 2);
 
     // now loop over chk files
     for (int ifile = sim_params.start_file; ifile < sim_params.num_files;
