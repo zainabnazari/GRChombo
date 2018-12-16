@@ -741,6 +741,7 @@ void GRAMRLevel::writePlotLevel(HDF5Handle &a_handle) const
         write(a_handle, levelGrids);
         //write(a_handle, plot_data, "data");
 
+        // Should not be needed... but just incase for extraction
         IntVect ghost_vector = IntVect::Zero;
         if(m_p.nonperiodic_boundaries_exist)
         {
@@ -916,11 +917,13 @@ void GRAMRLevel::fillAllGhosts()
         m_patcher.fillInterp(m_state_new, coarser_gr_amr_level_ptr->m_state_new,
                              0, 0, NUM_VARS);
     }
+    if (m_verbosity) pout() << "GRAMRLevel::Filling intralevel ghosts" << endl;
     fillIntralevelGhosts();
 
     // enforce symmetric BCs after filling ghosts
     if(m_p.symmetric_boundaries_exist)
     {
+        if (m_verbosity) pout() << "GRAMRLevel::Filling boundary ghosts" << endl;
         m_boundaries.enforce_symmetric_boundaries(Side::Hi, m_state_new);
         m_boundaries.enforce_symmetric_boundaries(Side::Lo, m_state_new);
     }

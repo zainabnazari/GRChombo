@@ -134,7 +134,7 @@ void AMRInterpolator<InterpAlgo>::computeLevelLayouts()
     }
 
     const Vector<AMRLevel *> &levels = const_cast<AMR &>(m_amr).getAMRLevels();
-    const int num_levels = m_num_levels; // levels.size();
+    const int num_levels = m_num_levels; //levels.size();
 
     m_origin.resize(num_levels);
     m_dx.resize(num_levels);

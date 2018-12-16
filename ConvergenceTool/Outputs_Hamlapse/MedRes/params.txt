@@ -1,17 +1,17 @@
 #Params for runtime inputs
-N1 = 24
-N2 = 24
-N3 = 24
+N1 = 32
+N2 = 32
+N3 = 32
 
-chk_prefix =   /home/fmuia/GRChombo/Examples/StarobinskiPotentialRun/phi048+lr/Starobinski_phi048plr_a1_P_
-restart_file = /home/fmuia/GRChombo/Examples/StarobinskiPotentialRun/phi048+lr/Starobinski_phi048plr_a1_P_000000.3d.hdf5
+chk_prefix =   /home/fmuia/GRChombo/Examples/StarobinskiPotentialRun/phi048+/Starobinski_phi048p_a1_P_
+restart_file = /home/fmuia/GRChombo/Examples/StarobinskiPotentialRun/phi048+/Starobinski_phi048p_a1_P_000000.3d.hdf5
 
-checkpoint_interval = 1
+checkpoint_interval = 4
 start_file = 0
-num_files = 50
+num_files = 123
 verbosity = 1
 
-base_dx = 1.0 #probably needs to be at least 3 times dx_min
+base_dx = 0.8 #probably needs to be at least 3 times dx_min
 num_points = 1 # number of points in radial direction
 
 # PROBABLY DONT NEED TO CHANGE FROM HERE

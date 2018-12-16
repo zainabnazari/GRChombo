@@ -54,12 +54,17 @@ int runConvergenceTool(int argc, char *argv[])
     GRAMR gr_amr;
     DefaultLevelFactory<EmptyLevel> empty_level_fact(gr_amr, sim_params);
     setupAMRObject(gr_amr, empty_level_fact);
+    AMRInterpolator<Lagrange<4>> interpolator(
+        gr_amr, sim_params.origin, sim_params.dx, sim_params.verbosity);
+    gr_amr.set_interpolator(&interpolator);
 
     // set up number of extraction points and variables to extract
     int num_points = 5;
     pp.query("num_points", num_points);
-    int var1 = c_chi;
-    int var2 = c_phi;
+    int var1 = c_Ham;
+    int var2 = c_lapse;
+    //int var1 = c_phi;
+    //int var2 = c_chi;
 
     // The base value is often zero - so all levels are interpolated to the
     // corner point
@@ -88,9 +93,6 @@ int runConvergenceTool(int argc, char *argv[])
         .addComp(var1, var1_ptr.get())
         .addComp(var2, var2_ptr.get());
 
-    // now the interpolator object, can choose up to 4th order
-    AMRInterpolator<Lagrange<4>> interpolator(gr_amr, sim_params.origin, sim_params.dx, 2);
-
     // now loop over chk files
     for (int ifile = sim_params.start_file; ifile < sim_params.num_files;
          ifile++)
@@ -112,11 +114,11 @@ int runConvergenceTool(int argc, char *argv[])
 
         handle.close();
 
-        pout() << " refresh interpolator " << endl;
-
-        // refresh the interpolator and execute the query
-        interpolator.refresh();
-        interpolator.interp(query);
+        // refresh the interpolator - causes a bug, and not always necessary
+        //gr_amr.interpolator.refresh();
+        
+        //execute query
+        gr_amr.m_interpolator->interp(query);
 
         // only rank 0 does the write out
         int rank;
@@ -125,8 +127,8 @@ int runConvergenceTool(int argc, char *argv[])
         {
             // set up file names and component names
             char file_str[sizeof "my_extraction_000000.txt"];
-            sprintf(file_str, "my_extraction_%06d.txt",
-                    sim_params.checkpoint_interval * ifile);
+            sprintf(file_str, "my_extraction_%06d.txt", ifile);
+                    //sim_params.checkpoint_interval * ifile);
             char comp_str1[20];
             sprintf(comp_str1, UserVariables::variable_names[var1]);
             char comp_str2[20];
