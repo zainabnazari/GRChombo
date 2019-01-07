@@ -161,8 +161,9 @@ class BoundaryConditions
                      case SOMMERFELD_BC:
                      {
                          // get real position on the grid
-                         RealVect loc(iv + 0.5 * RealVect::Unit - m_center);
+                         RealVect loc(iv + 0.5 * RealVect::Unit);
                          loc *= m_dx;
+                         loc -= m_center;
                          double radius_squared = 0.0;
                          FOR1(i) {radius_squared += loc[i]*loc[i];}
                          double radius = sqrt(radius_squared);
