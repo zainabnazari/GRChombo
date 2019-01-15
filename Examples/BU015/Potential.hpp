@@ -29,7 +29,7 @@ class Potential
     void compute_potential(data_t &V_of_phi, data_t &dVdphi,
                            const vars_t<data_t> &vars) const
     {
-        // The potential value at phi
+        // The potential value at phi (gs=0.15)
         double phi_min = 0.0920595855;
 
         V_of_phi = modulus_params.overall_normalization * (1.205759642115e-12 + 0.000827720012 * pow(phi_min + vars.phi, 4.0 * pow(3.0,-1.0)) * exp(-415.935390761567 * pow(phi_min + vars.phi, 4.0 * pow(3.0,-1.0))) - 3.104860978085e-7 * pow(phi_min + vars.phi, 4.0 * pow(3.0,-1.0)) * exp(-207.967695380784 * pow(phi_min + vars.phi, 4.0 * pow(3.0,-1.0))));
