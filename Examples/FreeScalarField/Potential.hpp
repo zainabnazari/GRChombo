@@ -13,15 +13,16 @@ class Potential
   public:
     struct params_t
     {
-        double scalar_mass;
+        double overall_normalization;
+	double decay_constant;
     };
 
   private:
-    params_t m_params;
+    params_t modulus_params;
 
   public:
     //! The constructor
-    Potential(params_t a_params) : m_params(a_params) {}
+    Potential(params_t a_params) : modulus_params(a_params) {}
 
     //! Set the potential function for the scalar field here
     template <class data_t, template <typename> class vars_t>
@@ -29,12 +30,12 @@ class Potential
                            const vars_t<data_t> &vars) const
     {
         // The potential value at phi
-        // 1/2 m^2 phi^2
-        V_of_phi = 0.5 * pow(m_params.scalar_mass * vars.phi, 2.0);
+        // V0(1 - Exp(-a phi))^2
+        V_of_phi = modulus_params.overall_normalization * modulus_params.decay_constant * 0.5 * pow(vars.phi,2.0);
 
         // The potential gradient at phi
-        // m^2 phi
-        dVdphi = pow(m_params.scalar_mass, 2.0) * vars.phi;
+        // 2 V0 a Exp[-a phi] (1-Exp[-a phi])
+        dVdphi = modulus_params.overall_normalization * modulus_params.decay_constant * vars.phi;
     }
 };
 

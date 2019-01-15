@@ -30,37 +30,22 @@ class Potential
                            const vars_t<data_t> &vars) const
     {
         // The potential value at phi
-        // V = 
+        // W0 = e-5
         double phi_min = 1.428314650033344;
-        V_of_phi = modulus_params.overall_normalization * (4.868172392485633 * 
-                                  pow(10.0,-11.0) * exp(-4.0*sqrt(3.0)*(phi_min + vars.phi)) 
-                 + 0.05 * exp( - 0.1*exp((2.0*(phi_min + vars.phi))/sqrt(3.0)) 
-                            - (4.0*(phi_min + vars.phi))/sqrt(3.0))
-                        * (- 0.0001 + exp(-0.1*exp((2.0*(phi_min + vars.phi))/sqrt(3.0))) 
-                           + 0.03333333333333333*exp(- 0.1*exp((2.0*(phi_min + vars.phi))/sqrt(3.0)) 
-                                                     + (2.0*(phi_min + vars.phi))/sqrt(3.0))));
+	double pi = M_PI;
+        V_of_phi = modulus_params.overall_normalization*(4.868172392485633e-11*exp(-4.0*pow(sqrt(3.0),-1.0)*(phi_min+vars.phi))
+                 					   +41.887902047863*exp(-2.0*pi*exp(2.0*pow(sqrt(3.0),-1.0)*(phi_min+vars.phi)))*exp(-4.0*pow(sqrt(3.0),-1.0)*(phi_min+vars.phi))
+                        					*(-0.00003*exp(pi*exp(2.0*pow(sqrt(3.0),-1.0)*(phi_min+vars.phi)))+10.0*(3.0+pi*exp(2.0*pow(sqrt(3.0),-1.0)*(phi_min+vars.phi)))));
 
         // The potential gradient at phi
-        // 2 V0 a Exp[-a phi] (1-Exp[-a phi])
-        dVdphi = modulus_params.overall_normalization * 
-               (
-                 - 1.030027101927e-8 * exp(-2.0*sqrt(3.0)*(phi_min + vars.phi)) 
-                 + 0.05 * exp( - 0.1*exp((2.0*(phi_min + vars.phi))/sqrt(3.0)) 
-                             - (4.0*(phi_min + vars.phi))/sqrt(3.0)) 
-                      * (- 4.0/sqrt(3.0) - 0.115470053838*exp((2.0*(phi_min + vars.phi))/sqrt(3.0))) 
-                      * (- 0.0001 + exp(-0.1*exp((2.0*(phi_min + vars.phi))/sqrt(3.0))) 
-                         + 0.03333333333333*exp(-0.1*exp((2.0*(phi_min + vars.phi))/sqrt(3.0)) 
-                                                + (2.0*(phi_min + vars.phi))/sqrt(3.0))) 
-                 + 0.05 * exp( - 0.1*exp((2.0*(phi_min + vars.phi))/sqrt(3.0))
-                             - (4.0*(phi_min + vars.phi))/sqrt(3.0))
-                      * (- 0.115470053838*exp(- 0.1*exp((2.0*(phi_min + vars.phi))/sqrt(3.0)) 
-                                              + (2.0*(phi_min + vars.phi))/sqrt(3.0)) 
-                         + 0.0333333333333*exp(- 0.1*exp((2.0*(phi_min + vars.phi))/sqrt(3.0))
-                                               + (2.0*(phi_min + vars.phi))/sqrt(3.0))
-                                          * (2.0/sqrt(3.0) - 0.115470053838*exp((2.0*(phi_min + vars.phi))/sqrt(3.0))))
-               ); 
-        //pout() << "phi, V, dVdphi " << vars.phi << " " << V_of_phi << " " << dVdphi << endl;
-    }
+        dVdphi = modulus_params.overall_normalization*(-1.124256256505e-10*exp(-4.0*pow(sqrt(3.0),-1.0)*(phi_min+vars.phi))
+							 +41.887902047863*exp(-2.0*pi*exp(2.0*pow(sqrt(3.0),-1.0)*(phi_min+vars.phi)))*exp(-4.0*pow(sqrt(3.0),-1.0)*(phi_min+vars.phi))
+								*(36.275987284684*exp(2.0*pow(sqrt(3.0),-1.0)*(phi_min+vars.phi))-0.000108828*exp(2.0*pow(sqrt(3.0),-1.0)*(phi_min+vars.phi))*exp(pi*exp(2.0*pow(sqrt(3.0),-1.0)*(phi_min+vars.phi))))
+							 -96.735966092491*exp(-2.0*pi*exp(2.0*pow(sqrt(3.0),-1.0)*(phi_min+vars.phi)))*exp(-4.0*pow(sqrt(3.0),-1.0)*(phi_min+vars.phi))
+								*(-0.00003*exp(pi*exp(2.0*pow(sqrt(3.0),-1.0)*(phi_min+vars.phi)))+10.0*(3.0+pi*exp(2.0*pow(sqrt(3.0),-1.0)*(phi_min+vars.phi))))
+							 -303.905000414083*exp(-2.0*pi*exp(2.0*pow(sqrt(3.0),-1.0)*(phi_min+vars.phi)))*exp(-2.0*pow(sqrt(3.0),-1.0)*(phi_min+vars.phi))
+                                                                *(-0.00003*exp(pi*exp(2.0*pow(sqrt(3.0),-1.0)*(phi_min+vars.phi)))+10.0*(3.0+pi*exp(2.0*pow(sqrt(3.0),-1.0)*(phi_min+vars.phi)))));
+	}
 };
 
 #endif /* POTENTIAL_HPP_ */

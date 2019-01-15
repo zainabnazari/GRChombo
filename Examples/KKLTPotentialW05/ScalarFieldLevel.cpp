@@ -13,8 +13,9 @@
 // For RHS update
 #include "MatterCCZ4.hpp"
 
-// For constraints calculation
+// For constraints calculation and AH finder
 #include "MatterConstraints.hpp"
+#include "SphericalHorizon.hpp"
 
 // For tag cells
 #include "OscillotonTaggingCriterion.hpp"
@@ -79,9 +80,22 @@ void ScalarFieldLevel::initialData()
          BoxLoops::loop(SetValue(0.0), m_state_new, m_state_new, FILL_GHOST_CELLS);
 
          // Initial conditions for scalar field - Oscilloton
-         BoxLoops::loop(OscillotonInitial(m_p.L, m_dx, m_p.center,
+         BoxLoops::loop(OscillotonInitial(m_p.L, m_dx, m_p.sign_of_Pi, m_p.center,
              spacing, lapse_values, psi_values, Pi_values),
            m_state_new, m_state_new, FILL_GHOST_CELLS, disable_simd());
+}
+
+// Things to do before outputting a checkpoint file
+void ScalarFieldLevel::prePlotLevel()
+{
+    fillAllGhosts();
+    Potential potential(m_p.potential_params);
+    ScalarFieldWithPotential scalar_field(potential);
+    BoxLoops::loop(MatterConstraints<ScalarFieldWithPotential>(
+                       scalar_field, m_dx, m_p.G_Newton),
+                   m_state_new, m_state_new, EXCLUDE_GHOST_CELLS);
+    BoxLoops::loop(SphericalHorizon(m_dx, m_p.center, potential),
+                   m_state_new, m_state_new, EXCLUDE_GHOST_CELLS);
 }
 
 // Things to do before outputting a checkpoint file
@@ -89,9 +103,7 @@ void ScalarFieldLevel::preCheckpointLevel()
 {
     fillAllGhosts();
     Potential potential(m_p.potential_params);
-    ScalarFieldWithPotential scalar_field(potential);
-    BoxLoops::loop(MatterConstraints<ScalarFieldWithPotential>(
-                       scalar_field, m_dx, m_p.G_Newton),
+    BoxLoops::loop(SphericalHorizon(m_dx, m_p.center, potential),
                    m_state_new, m_state_new, EXCLUDE_GHOST_CELLS);
 }
 
@@ -130,15 +142,14 @@ void ScalarFieldLevel::specificUpdateODE(GRLevelData &a_soln,
 void ScalarFieldLevel::specificWritePlotHeader(
     std::vector<int> &plot_states) const
 {
-    plot_states = {c_phi, c_chi};//, c_lapse
-//};
+    plot_states = {c_phi, c_chi, c_lapse, c_Ham, c_VofPhi};
 }
 
 void ScalarFieldLevel::computeTaggingCriterion(FArrayBox &tagging_criterion,
                                                const FArrayBox &current_state)
 {
-    BoxLoops::loop(OscillotonTaggingCriterion(m_dx, m_p.regrid_threshold_chi,
-                                              m_p.regrid_threshold_phi, m_level,
+    BoxLoops::loop(OscillotonTaggingCriterion(m_dx, m_p.regrid_threshold_chi, m_p.regrid_threshold_phi, 
+                                              m_p.regrid_cutoff_phi, m_level,
                                               m_p.extraction_params),
                    current_state, tagging_criterion);
 }

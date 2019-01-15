@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 #yt.enable_parallelism()
 
 #Loading dataset
-loc = '/home/fmuia/GRChombo/Examples/StarobinskiPotentialRun/phi04+/Starobinski_phi04_a1_P_0000*'
+loc = '/home/fmuia/GRChombo/Examples/StarobinskiPotentialRun/phi03+a10N64/Starobinski_phi03pN64_a10_P_*'
 ds = yt.load(loc)
 
 #from mpi4py import MPI
@@ -25,7 +25,7 @@ variable = 'phi'
 time_data = []
 var_data = []
 CycleData = []
-filename = 'PhivsTime.txt'
+filename = 'PhivsTime_phi03+a10N64.txt'
 
 last_current_time = 0
 proper_time = 0
