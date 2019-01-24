@@ -1,27 +1,27 @@
 #Params for runtime inputs
 
 verbosity = 0
-chk_prefix = KKLT_phi002pN64_W05_
-plot_prefix = KKLT_phi002pN64_W05_P_
+chk_prefix = KKLT_phi010pN64_W05_
+plot_prefix = KKLT_phi010pN64_W05_P_
 initial_data_prefix = Oscilloton_data_iso/
-restart_file = KKLT_phi002pN64_W05_002000.3d.hdf5
+#restart_file = KKLT_phi010pN64_W05_000050.3d.hdf5
 
 # Set up grid spacings and regrid params
 # NB - the N values need to be multiples of block_factor
-N1 = 64
-N2 = 64
-N3 = 64
+N1 = 32
+N2 = 32
+N3 = 32
 
 # Length of longest box side, dx_coarsest = L/N(max)
 # NB if non cubic, this determines dx for all sides
-L = 128
+L = 64
 
 # Regridding
 # Thresholds on the change across a cell which prompts regrid
 regrid_threshold = 0.5
 regrid_threshold_chi = 0.1
-regrid_threshold_phi = 0.001
-regrid_cutoff_phi = 1e-7
+regrid_threshold_phi = 0.005
+regrid_cutoff_phi = 1e-5
 
 # Level data
 # Maximum number of times you can regrid above coarsest level
@@ -29,7 +29,7 @@ max_level = 7 # There are (max_level+1) grids, so min is zero
 # Frequency of regridding at each level
 # Need one for each level, ie max_level+1 items
 # Generally you do not need to regrid frequently on every level
-regrid_interval = 1 1 1 1 1 1 1 1 1 1
+regrid_interval = 32 32 32 32 32 32 32 32
 # Max box size
 max_grid_size = 16
 # Min box size

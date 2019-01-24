@@ -53,8 +53,6 @@ class OscillotonTaggingCriterion
 
     template <class data_t> void compute(Cell<data_t> current_cell) const
     {
-        const auto d1 = m_deriv.template diff1<MatterVars>(current_cell);
-        const auto d1chi = m_deriv.template diff1<Vars>(current_cell);
         const auto d2 = m_deriv.template diff2<MatterVars>(current_cell);
         const auto d2chi = m_deriv.template diff2<Vars>(current_cell);
 
@@ -63,13 +61,10 @@ class OscillotonTaggingCriterion
 
         FOR2(idir, jdir)
         {
-            mod_d2_chi += d2chi.chi[idir][jdir] * d2chi.chi[idir][jdir] /
-                          (1e-2 + abs(d1chi.chi[idir] * d1chi.chi[jdir]));
+            mod_d2_chi += d2chi.chi[idir][jdir] * d2chi.chi[idir][jdir];
 
-            mod_d2_phi += d2.Pi[idir][jdir] * d2.Pi[idir][jdir] /
-                              (abs(d1.Pi[idir] * d1.Pi[jdir]) + m_cutoff_phi) +
-                          d2.phi[idir][jdir] * d2.phi[idir][jdir] /
-                              (abs(d1.phi[idir] * d1.phi[jdir]) + m_cutoff_phi);
+            mod_d2_phi += d2.Pi[idir][jdir] * d2.Pi[idir][jdir]
+                       +  d2.phi[idir][jdir] * d2.phi[idir][jdir];
         }
 
         data_t criterion_chi = m_dx / m_threshold_chi * sqrt(mod_d2_chi);
