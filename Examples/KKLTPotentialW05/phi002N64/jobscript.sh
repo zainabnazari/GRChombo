@@ -1,6 +1,6 @@
 #!/bin/bash -l
 echo =========================================================   
-echo Job started at Thu Jan 24 18:47:17 GMT 2019      
+echo Job started at Mon Jan 28 16:22:22 GMT 2019      
 date_start=`date +%s`
 echo $SLURM_JOB_NUM_NODES nodes \( $SMP processes per node \)        
 echo $SLURM_JOB_NUM_NODES hosts used: $SLURM_JOB_NODELIST      
@@ -9,7 +9,7 @@ echo -----------------
 echo   
 #hostname 
 #ulimit -l unlimited which mpirun
-export OMP_NUM_THREADS=8
+export OMP_NUM_THREADS=12
  nice -n 10 /mnt/zfsusers/kclough/ForkedGRC/GRChombo/Examples/KKLTPotentialW05/phi002N64/./jobscript 
 # If we've been checkpointed
 #if [ -n "${DMTCP_CHECKPOINT_DIR}" ]; then

@@ -21,16 +21,16 @@ void SphericalHorizon::compute(Cell<data_t> current_cell) const
 
     //DEBUG HACK:
     // set the potential values
-    const auto matter_vars = current_cell.template load_vars<MatterVars>();
-    data_t V_of_phi = 0.0;
-    data_t dVdphi = 0.0;
+//    const auto matter_vars = current_cell.template load_vars<MatterVars>();
+//    data_t V_of_phi = 0.0;
+//    data_t dVdphi = 0.0;
 
     // compute potential
-    m_potential.compute_potential(V_of_phi, dVdphi, matter_vars);
+//    m_potential.compute_potential(V_of_phi, dVdphi, matter_vars);
 
     // Write the rhs into the output FArrayBox
     current_cell.store_vars(out, c_Omega);
-    current_cell.store_vars(V_of_phi, c_VofPhi);
+//    current_cell.store_vars(V_of_phi, c_VofPhi);
 }
 
 template <class data_t>

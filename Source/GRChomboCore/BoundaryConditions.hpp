@@ -485,12 +485,12 @@ class BoundaryConditions
             }
 
             // adjust for any offsets - catches the corners etc
-            // but only want to fill them once, so x fills y and z, y fills z etc
+            // but only want to fill them once, so y fills x and z fills y and x etc
             for (int idir = 0 ; idir < CH_SPACEDIM ; idir ++)
             {
                 if (offset_lo[idir] > 0) // this direction is a low end boundary
                 {
-                    if ((idir > a_dir) && !(m_domain.isPeriodic(idir)))
+                    if ((idir < a_dir) && !(m_domain.isPeriodic(idir)))
                     {
                         //grow it to fill the corners
                         boundary_box.growLo(idir, m_num_ghosts - shrink_for_coarse);
@@ -503,7 +503,7 @@ class BoundaryConditions
 
                 if (offset_hi[idir] > 0) //this direction is a high end boundary
                 {
-                    if ((idir > a_dir) && !(m_domain.isPeriodic(idir)))
+                    if ((idir < a_dir) && !(m_domain.isPeriodic(idir)))
                     {
                         //grow it to fill the corners
                         boundary_box.growHi(idir, m_num_ghosts - shrink_for_coarse);

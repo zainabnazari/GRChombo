@@ -142,7 +142,7 @@ void ScalarFieldLevel::specificUpdateODE(GRLevelData &a_soln,
 void ScalarFieldLevel::specificWritePlotHeader(
     std::vector<int> &plot_states) const
 {
-    plot_states = {c_phi, c_chi, c_lapse, c_Ham, c_VofPhi};
+    plot_states = {c_phi, c_chi, c_Ham};
 }
 
 void ScalarFieldLevel::computeTaggingCriterion(FArrayBox &tagging_criterion,

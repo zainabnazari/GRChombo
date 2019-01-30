@@ -20,7 +20,7 @@ L = 64
 # Thresholds on the change across a cell which prompts regrid
 regrid_threshold = 0.5
 regrid_threshold_chi = 0.1
-regrid_threshold_phi = 0.005
+regrid_threshold_phi = 0.002
 regrid_cutoff_phi = 1e-5
 
 # Level data
@@ -33,7 +33,7 @@ regrid_interval = 32 32 32 32 32 32 32 32
 # Max box size
 max_grid_size = 16
 # Min box size
-block_factor = 8
+block_factor = 16
 
 # Set up time steps
 # dt will be dx*dt_multiplier on each grid level
@@ -41,7 +41,7 @@ block_factor = 8
 checkpoint_interval = 50
 plot_interval = 2
 dt_multiplier = 0.1
-stop_time = 600.0
+stop_time = 1000.0
 max_steps = 10000000
 
 #Lapse evolution
