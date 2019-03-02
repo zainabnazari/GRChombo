@@ -1,26 +1,26 @@
 #Params for runtime inputs
 
 verbosity = 0
-chk_prefix = S02_phi002_
-plot_prefix = S02_phi002_P_
+chk_prefix = Sa1_phi03_
+plot_prefix = Sa1_phi03_P_
 initial_data_prefix = Oscilloton_data_iso/
-#restart_file = S02_phi002_000500.3d.hdf5
+#restart_file = Sa1_phi03_000500.3d.hdf5
 
 # Set up grid spacings and regrid params
 # NB - the N values need to be multiples of block_factor
-N1 = 64
-N2 = 64
-N3 = 64
+N1 = 32
+N2 = 32
+N3 = 32
 
 # Length of longest box side, dx_coarsest = L/N(max)
 # NB if non cubic, this determines dx for all sides
-L = 128
+L = 64
 
 # Regridding
 # Thresholds on the change across a cell which prompts regrid
 regrid_threshold = 0.5
 regrid_threshold_chi = 0.1
-regrid_threshold_phi = 0.1
+regrid_threshold_phi = 0.05
 
 # Level data
 # Maximum number of times you can regrid above coarsest level
@@ -28,11 +28,11 @@ max_level = 7 # There are (max_level+1) grids, so min is zero
 # Frequency of regridding at each level
 # Need one for each level, ie max_level+1 items
 # Generally you do not need to regrid frequently on every level
-regrid_interval = 32 32 32 32 32 32 32 32 32 32 32 32
+regrid_interval = 64 64 64 64 64 64 64 64 64 64 64 64 64
 # Max box size
 max_grid_size = 16
 # Min box size
-block_factor = 16
+block_factor = 8
 
 # Set up time steps
 # dt will be dx*dt_multiplier on each grid level
@@ -40,7 +40,7 @@ block_factor = 16
 checkpoint_interval = 100
 plot_interval = 2
 dt_multiplier = 0.1
-stop_time = 10.0
+stop_time = 1000.0
 max_steps = 10000000
 
 #Lapse evolution
@@ -70,13 +70,13 @@ sigma = 0.5
 G_Newton = 1.0
 
 # SF Initial data
-overall_normalization = 0.2
+overall_normalization = 1.0
 decay_constant = 1.0
 sign_of_Pi = +1
 
 # Extraction Level
-extraction_radius = 15.0
-extraction_level = 1
+extraction_radius = 5.0
+extraction_level = 2
 
 #Periodic directions - 0 = false, 1 = true
 isPeriodic = 0 0 0
