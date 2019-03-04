@@ -1,10 +1,10 @@
 #Params for runtime inputs
 
 verbosity = 0
-chk_prefix = T01_phi01_
-plot_prefix = T01_phi01_P_
+chk_prefix = Sa2NG_phi01_
+plot_prefix = Sa2NG_phi01_P_
 initial_data_prefix = Oscilloton_data_iso/
-#restart_file = T01_phi01_000500.3d.hdf5
+#restart_file = Sa2NG_phi01_000500.3d.hdf5
 
 # Set up grid spacings and regrid params
 # NB - the N values need to be multiples of block_factor
@@ -19,8 +19,8 @@ L = 64
 # Regridding
 # Thresholds on the change across a cell which prompts regrid
 regrid_threshold = 0.5
-regrid_threshold_chi = 0.2
-regrid_threshold_phi = 0.2
+regrid_threshold_chi = 0.1
+regrid_threshold_phi = 0.02
 
 # Level data
 # Maximum number of times you can regrid above coarsest level
@@ -67,16 +67,16 @@ sigma = 0.5
 
 # Change the gravitational constant of the Universe!
 # Default is 1.0, for standard geometric units
-G_Newton = 1.0
+G_Newton = 0.0
 
 # SF Initial data
-overall_normalization = 0.1
+overall_normalization = 2.0
 decay_constant = 1.0
 sign_of_Pi = +1
 
 # Extraction Level
-extraction_radius = 2.0
-extraction_level = 3
+extraction_radius = 5.0
+extraction_level = 2
 
 #Periodic directions - 0 = false, 1 = true
 isPeriodic = 0 0 0

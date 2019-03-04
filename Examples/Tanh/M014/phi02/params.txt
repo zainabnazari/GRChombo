@@ -1,10 +1,10 @@
 #Params for runtime inputs
 
 verbosity = 0
-chk_prefix = T01_phi01_
-plot_prefix = T01_phi01_P_
+chk_prefix = T014_phi02_
+plot_prefix = T014_phi02_P_
 initial_data_prefix = Oscilloton_data_iso/
-#restart_file = T01_phi01_000500.3d.hdf5
+#restart_file = T014_phi02_000270.3d.hdf5
 
 # Set up grid spacings and regrid params
 # NB - the N values need to be multiples of block_factor
@@ -19,8 +19,8 @@ L = 64
 # Regridding
 # Thresholds on the change across a cell which prompts regrid
 regrid_threshold = 0.5
-regrid_threshold_chi = 0.2
-regrid_threshold_phi = 0.2
+regrid_threshold_chi = 0.6
+regrid_threshold_phi = 0.6
 
 # Level data
 # Maximum number of times you can regrid above coarsest level
@@ -45,7 +45,7 @@ max_steps = 10000000
 
 #Lapse evolution
 lapse_power = 1.0
-lapse_coeff = 1.0
+lapse_coeff = 0.2
 lapse_advec_coeff = 1 # 1 makes the lapse gauge 1+log slicing
 
 # Shift evolution coefficients
@@ -70,7 +70,7 @@ sigma = 0.5
 G_Newton = 1.0
 
 # SF Initial data
-overall_normalization = 0.1
+overall_normalization = 0.14
 decay_constant = 1.0
 sign_of_Pi = +1
 
