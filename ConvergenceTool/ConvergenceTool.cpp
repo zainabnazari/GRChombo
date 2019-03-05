@@ -62,7 +62,7 @@ int runConvergenceTool(int argc, char *argv[])
     int num_points = 5;
     pp.query("num_points", num_points);
     int var1 = c_Ham;
-    int var2 = c_lapse;
+    int var2 = c_chi;
     //int var1 = c_phi;
     //int var2 = c_chi;
 
@@ -114,8 +114,8 @@ int runConvergenceTool(int argc, char *argv[])
 
         handle.close();
 
-        // refresh the interpolator - causes a bug, and not always necessary
-        //gr_amr.interpolator.refresh();
+        // refresh the interpolator - causes a bug?
+        gr_amr.m_interpolator->refresh();
         
         //execute query
         gr_amr.m_interpolator->interp(query);

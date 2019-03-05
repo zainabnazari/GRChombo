@@ -13,6 +13,7 @@ enum
     c_chi,
     c_lapse,
     c_Ham,
+    c_VofPhi,
 
     NUM_VARS
 };
@@ -20,7 +21,7 @@ enum
 namespace UserVariables
 {
 static constexpr char const *variable_names[NUM_VARS] = {
-    "phi",    "chi",   "lapse",  "Ham"};
+    "phi",    "chi",  "lapse",  "Ham", "VofPhi"};
 }
 
 // assign another enum to the other CCZ4 variables

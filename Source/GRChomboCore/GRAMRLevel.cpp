@@ -726,7 +726,8 @@ void GRAMRLevel::writePlotLevel(HDF5Handle &a_handle) const
             pout() << header << endl;
 
         const DisjointBoxLayout &levelGrids = m_state_new.getBoxes();
-        LevelData<FArrayBox> plot_data(levelGrids, num_states);
+        IntVect ghost_iv = m_num_ghosts*IntVect::Unit;
+        LevelData<FArrayBox> plot_data(levelGrids, num_states, ghost_iv);
 
         for (int comp = 0; comp < num_states; comp++)
         {
@@ -734,12 +735,10 @@ void GRAMRLevel::writePlotLevel(HDF5Handle &a_handle) const
             Interval plotComps(plot_states[comp], plot_states[comp]);
             m_state_new.copyTo(plotComps, plot_data, currentComp);
         }
-
         plot_data.exchange(plot_data.interval());
 
         // Write the data for this level
         write(a_handle, levelGrids);
-        //write(a_handle, plot_data, "data");
 
         // Should not be needed... but just incase for extraction
         IntVect ghost_vector = IntVect::Zero;
@@ -748,6 +747,7 @@ void GRAMRLevel::writePlotLevel(HDF5Handle &a_handle) const
             ghost_vector = m_num_ghosts*IntVect::Unit;
         }
         write(a_handle, plot_data, "data", ghost_vector);
+        //write(a_handle, plot_data, "data");
     }
 }
 
