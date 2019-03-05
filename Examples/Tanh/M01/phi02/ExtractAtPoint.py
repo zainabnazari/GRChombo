@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 #yt.enable_parallelism()
 
 #Loading dataset
-loc = '/home/fmuia/GRChombo/Examples/Tanh/M01/phi02/T01_phi02_P_00**'
+loc = '/home/fmuia/GRChomboNew/GRChombo/Examples/Tanh/M01/phi02/T01_phi02_P_00**'
 ds = yt.load(loc)
 
 #from mpi4py import MPI

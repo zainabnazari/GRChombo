@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 #yt.enable_parallelism()
 
 #Loading dataset
-loc = '/home/fmuia/GRChombo/Examples/Tanh/M014/phi03/T014_phi03_P_00**'
+loc = '/home/fmuia/GRChomboNew/GRChombo/Examples/Tanh/M014/phi01/T014_phi01_P_00**'
 ds = yt.load(loc)
 
 #from mpi4py import MPI
@@ -22,12 +22,12 @@ ds = yt.load(loc)
 location =  np.array([0,0,0])
 #location =  ds[0].domain_right_edge/2
 #variable = 'VofPhi'
-variable = 'chi'
+variable = 'phi'
 time_data = []
 var_data = []
 CycleData = []
 #filename = 'VofPhiT02.txt'
-filename = 'chi03T014.txt'
+filename = 'phi01T014.txt'
 
 last_current_time = 0
 proper_time = 0
