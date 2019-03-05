@@ -20,15 +20,19 @@
 class SphericalHorizon
 {
     template <class data_t> using Vars = ADMConformalVars::VarsNoGauge<data_t>;
+    
+    template <class data_t>
+    using MatterVars = typename ScalarField<>::template Vars<data_t>;
 
   protected:
     const FourthOrderDerivatives m_deriv;
     const double m_dx;
     const std::array<double, CH_SPACEDIM> m_center; // only works in 3+1D
+    const Potential m_potential;
 
   public:
-    SphericalHorizon(double dx, std::array<double, CH_SPACEDIM> a_center)
-        : m_center(a_center), m_dx(dx), m_deriv(dx)
+    SphericalHorizon(double dx, std::array<double, CH_SPACEDIM> a_center, Potential a_potential)
+        : m_potential(a_potential), m_center(a_center), m_dx(dx), m_deriv(dx)
     {
     }
 

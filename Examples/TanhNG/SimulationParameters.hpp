@@ -30,7 +30,7 @@ class SimulationParameters : public SimulationParametersBase
 
         // Fill in the potential parameters
         potential_params.overall_normalization = overall_normalization;
-	potential_params.decay_constant = decay_constant;
+	//potential_params.decay_constant = decay_constant;
     }
 
     void auto_read_params(GRParmParse &pp)
@@ -38,7 +38,7 @@ class SimulationParameters : public SimulationParametersBase
         // Initial and SF data
         pp.load("initial_data_prefix", initial_data_prefix);
         pp.load("overall_normalization", overall_normalization);
-	pp.load("decay_constant", decay_constant);
+	//pp.load("decay_constant", decay_constant);
 	pp.load("sign_of_Pi", sign_of_Pi, 1);
 	pp.load("G_Newton", G_Newton, 1.0);
 

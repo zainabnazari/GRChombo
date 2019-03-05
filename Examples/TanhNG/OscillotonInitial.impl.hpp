@@ -38,7 +38,7 @@ void OscillotonInitial::compute(Cell<double> current_cell) const
     // assign value of chi
     vars.Pi = - m_sign_of_Pi * vars.Pi;
     vars.chi = 1.0;
-    vars.lapse = 1.0;
+    vars.lapse=1.0;
     FOR1(i) {vars.h[i][i]=1.0;}
 
     current_cell.store_vars(vars);
