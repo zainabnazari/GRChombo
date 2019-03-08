@@ -75,33 +75,14 @@ class OscillotonTaggingCriterion
 
         // regrid if within extraction level and not at required refinement
         if (m_level < m_params.extraction_level)
-        {
-            std::array<double, CH_SPACEDIM> center;
+	{
+	    std::array<double, CH_SPACEDIM> center;
             center.fill(0.0);
             const Coordinates<data_t> coords(current_cell, m_dx, center);
             const data_t r = coords.get_radius();
             data_t regrid = simd_compare_lt(r, m_params.extraction_radius);
             criterion = simd_conditional(regrid, 1.0, criterion);
         }
-
-
-
-
-
-
-
-
-
-
-//        if (m_level < m_params.extraction_level)
-//	{
-//	    std::array<double, CH_SPACEDIM> center;
-//            center.fill(0.0);
-//            const Coordinates<data_t> coords(current_cell, m_dx, center);
-//            const data_t r = coords.get_radius();
-//            data_t regrid = simd_compare_lt(r, m_params.extraction_radius);
-//            criterion = simd_conditional(regrid, 1.0, criterion);
-//        }
 
 
 
