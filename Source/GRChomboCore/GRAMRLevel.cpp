@@ -726,28 +726,43 @@ void GRAMRLevel::writePlotLevel(HDF5Handle &a_handle) const
             pout() << header << endl;
 
         const DisjointBoxLayout &levelGrids = m_state_new.getBoxes();
-        IntVect ghost_iv = m_num_ghosts*IntVect::Unit;
-        LevelData<FArrayBox> plot_data(levelGrids, num_states, ghost_iv);
+        IntVect iv_ghosts = m_num_ghosts*IntVect::Unit;
+        LevelData<FArrayBox> plot_data(levelGrids, num_states, iv_ghosts);
 
-        for (int comp = 0; comp < num_states; comp++)
+        // only need to write ghosts when non periodic BCs exist
+        // and we want to preserve the values in the boundary boxes
+        IntVect ghost_vector = IntVect::Zero;
+        if (m_p.nonperiodic_boundaries_exist)
         {
-            Interval currentComp(comp, comp);
-            Interval plotComps(plot_states[comp], plot_states[comp]);
-            m_state_new.copyTo(plotComps, plot_data, currentComp);
+            ghost_vector = m_num_ghosts * IntVect::Unit;
+            Box grown_domain_box = m_problem_domain.domainBox();
+            grown_domain_box.grow(ghost_vector);
+            Copier boundary_copier;
+            boundary_copier.ghostDefine(
+                    m_state_new.disjointBoxLayout(),
+                    plot_data.disjointBoxLayout(), grown_domain_box,
+                    ghost_vector, ghost_vector);
+            for (int comp = 0; comp < num_states; comp++)
+            {
+                Interval currentComp(comp, comp);
+                Interval plotComps(plot_states[comp], plot_states[comp]);
+                m_state_new.copyTo(plotComps, plot_data, currentComp, boundary_copier);
+            }
+        }
+        else
+        {
+            for (int comp = 0; comp < num_states; comp++)
+            {
+                Interval currentComp(comp, comp);
+                Interval plotComps(plot_states[comp], plot_states[comp]);
+                m_state_new.copyTo(plotComps, plot_data, currentComp);
+            }
         }
         plot_data.exchange(plot_data.interval());
 
         // Write the data for this level
         write(a_handle, levelGrids);
-
-        // Should not be needed... but just incase for extraction
-        IntVect ghost_vector = IntVect::Zero;
-        if(m_p.nonperiodic_boundaries_exist)
-        {
-            ghost_vector = m_num_ghosts*IntVect::Unit;
-        }
         write(a_handle, plot_data, "data", ghost_vector);
-        //write(a_handle, plot_data, "data");
     }
 }
 
