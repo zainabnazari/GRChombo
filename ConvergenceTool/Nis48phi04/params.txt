@@ -1,14 +1,14 @@
 #Params for runtime inputs
-N1 = 56
-N2 = 56
-N3 = 56
+N1 = 48
+N2 = 48
+N3 = 48
 
-chk_prefix = /home/fmuia/GRChomboNew/GRChombo/Examples/Tanh/M02/phi04N56/T02N56_phi04_P_
-restart_file = /home/fmuia/GRChomboNew/GRChombo/Examples/Tanh/M02/phi04N56/T02N56_phi04_P_000000.3d.hdf5
+chk_prefix = /home/fmuia/GRChomboNew/GRChombo/Examples/Tanh/M02/phi04N48/T02N48_phi04_P_
+restart_file = /home/fmuia/GRChomboNew/GRChombo/Examples/Tanh/M02/phi04N48/T02N48_phi04_P_000000.3d.hdf5
 
-checkpoint_interval = 7
+checkpoint_interval = 6
 start_file = 0
-num_files = 56
+num_files = 55
 verbosity = 1
 
 base_dx = 0.8 #probably needs to be at least 3 times dx_min
@@ -18,7 +18,7 @@ num_points = 100 # number of points in radial direction
 # Likely the same for all resolutions
 L = 64
 max_level = 8 # There are (max_level+1) grids, so min is zero
-regrid_interval = 64 64 64 64 64 64 64 64 64 64 64
+regrid_interval = 64 64 64 64 64 64 64 64 64 64 64 64
 max_grid_size = 16
 block_factor = 8
 plot_prefix = PlotFile

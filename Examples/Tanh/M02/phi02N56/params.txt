@@ -38,7 +38,7 @@ block_factor = 8
 # dt will be dx*dt_multiplier on each grid level
 # HDF5files are written every dt = L/N*dt_multiplier*checkpoint_interval
 checkpoint_interval = 200
-plot_interval = 2
+plot_interval = 1
 dt_multiplier = 0.1
 stop_time = 1000.0
 max_steps = 10000000

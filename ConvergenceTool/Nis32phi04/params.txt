@@ -6,9 +6,9 @@ N3 = 32
 chk_prefix = /home/fmuia/GRChomboNew/GRChombo/Examples/Tanh/M02/phi04N32/T02N32_phi04_P_
 restart_file = /home/fmuia/GRChomboNew/GRChombo/Examples/Tanh/M02/phi04N32/T02N32_phi04_P_000000.3d.hdf5
 
-checkpoint_interval = 2
+checkpoint_interval = 4
 start_file = 0
-num_files = 149
+num_files = 55
 verbosity = 1
 
 base_dx = 0.8 #probably needs to be at least 3 times dx_min
