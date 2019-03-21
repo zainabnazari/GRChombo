@@ -8,7 +8,7 @@ restart_file = /home/fmuia/GRChomboNew/GRChombo/Examples/Tanh/M02/phi04N64/T02N6
 
 checkpoint_interval = 8
 start_file = 0
-num_files = 190
+num_files = 55
 verbosity = 1
 
 base_dx = 0.8 #probably needs to be at least 3 times dx_min
