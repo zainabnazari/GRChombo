@@ -4,6 +4,7 @@ my_extraction*
 *.s
 *.sh
 *.err
+*.btr
 d
 o
 p
