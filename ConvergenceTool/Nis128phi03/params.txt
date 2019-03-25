@@ -1,14 +1,14 @@
 #Params for runtime inputs
-N1 = 48
-N2 = 48
-N3 = 48
+N1 = 128
+N2 = 128
+N3 = 128
 
-chk_prefix = /home/fmuia/GRChomboNew/GRChombo/Examples/Tanh/M02/phi03N48/T02N48_phi03_P_
-restart_file = /home/fmuia/GRChomboNew/GRChombo/Examples/Tanh/M02/phi03N48/T02N48_phi03_P_000000.3d.hdf5
+chk_prefix = /home/fmuia/GRChomboNew/GRChombo/Examples/Tanh/M02/phi03N128/T02N128_phi03_P_
+restart_file = /home/fmuia/GRChomboNew/GRChombo/Examples/Tanh/M02/phi03N128/T02N128_phi03_P_000000.3d.hdf5
 
-checkpoint_interval = 6
+checkpoint_interval = 36
 start_file = 0
-num_files = 47
+num_files = 18
 verbosity = 1
 
 base_dx = 0.8 #probably needs to be at least 3 times dx_min
@@ -18,12 +18,12 @@ num_points = 100 # number of points in radial direction
 # Likely the same for all resolutions
 L = 64
 max_level = 8 # There are (max_level+1) grids, so min is zero
-regrid_interval = 64 64 64 64 64 64 64 64 64 64 64 64
+regrid_interval = 64 64 64 64 64 64 64 64 64 64 64
 max_grid_size = 16
 block_factor = 8
 plot_prefix = PlotFile
 dt_multiplier = 0.05
-stop_time = 1000.0
+stop_time = 19.0
 isPeriodic = 1 1 1
 # if not periodic, then specify the boundary type
 # 0 = static, 1 = sommerfeld, 2 = symmetric
