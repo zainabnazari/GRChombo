@@ -1,7 +1,10 @@
-pout.*
+pout*
 my_extraction*
 *.pbs
 *.s
+*.sh
+*.err
+*.btr
 d
 o
 p
