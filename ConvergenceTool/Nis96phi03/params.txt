@@ -1,14 +1,14 @@
 #Params for runtime inputs
-N1 = 32
-N2 = 32
-N3 = 32
+N1 = 96
+N2 = 96
+N3 = 96
 
-chk_prefix = /home/fmuia/GRChomboNew/GRChombo/Examples/Tanh/M02/phi03N32/T02N32_phi03_P_
-restart_file = /home/fmuia/GRChomboNew/GRChombo/Examples/Tanh/M02/phi03N32/T02N32_phi03_P_000000.3d.hdf5
+chk_prefix = /home/fmuia/GRChomboNew/GRChombo/Examples/Tanh/M02/phi03N96/T02N96_phi03_P_
+restart_file = /home/fmuia/GRChomboNew/GRChombo/Examples/Tanh/M02/phi03N96/T02N96_phi03_P_000000.3d.hdf5
 
-checkpoint_interval = 4
+checkpoint_interval = 12
 start_file = 0
-num_files = 47
+num_files = 27
 verbosity = 1
 
 base_dx = 0.8 #probably needs to be at least 3 times dx_min
