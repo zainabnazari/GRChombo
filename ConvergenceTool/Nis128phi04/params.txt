@@ -1,14 +1,12 @@
 #Params for runtime inputs
-N1 = 64
-N2 = 64
-N3 = 64
+N1 = 128
+N2 = 128
+N3 = 128
 
-chk_prefix = /snap7/scratch/dp016/dc-cui1/Oscillotons/T02N64_phi04_P_
-#/home/fmuia/GRChomboNew/GRChombo/Examples/Tanh/M02/phi04N64/T02N64_phi04_P_
-restart_file = /snap7/scratch/dp016/dc-cui1/Oscillotons/T02N64_phi04_P_000000.3d.hdf5
-#/home/fmuia/GRChomboNew/GRChombo/Examples/Tanh/M02/phi04N64/T02N64_phi04_P_000000.3d.hdf5
+chk_prefix = /snap7/scratch/dp016/dc-cui1/Oscillotons/T02N128_phi04_P_
+restart_file = /snap7/scratch/dp016/dc-cui1/Oscillotons/T02N128_phi04_P_000000.3d.hdf5
 
-checkpoint_interval = 8
+checkpoint_interval = 16
 start_file = 0
 num_files = 55
 verbosity = 1
