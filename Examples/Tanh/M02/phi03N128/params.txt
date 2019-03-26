@@ -4,7 +4,7 @@ verbosity = 0
 chk_prefix = T02N128_phi03_
 plot_prefix = T02N128_phi03_P_
 initial_data_prefix = Oscilloton_data_iso/
-#restart_file = T02N128_phi03_000540.3d.hdf5
+#restart_file = T02N128_phi03_000490.3d.hdf5
 
 # Set up grid spacings and regrid params
 # NB - the N values need to be multiples of block_factor
@@ -28,9 +28,9 @@ max_level = 8 # There are (max_level+1) grids, so min is zero
 # Frequency of regridding at each level
 # Need one for each level, ie max_level+1 items
 # Generally you do not need to regrid frequently on every level
-regrid_interval = 0 0 0 0 8 8 8 8 8 8 8 8
+regrid_interval = 0 0 0 0 8 8 8 8 8 8 8 8 
 # Max box size
-max_grid_size = 16
+max_grid_size = 8
 # Min box size
 block_factor = 8
 
