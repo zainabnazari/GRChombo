@@ -71,6 +71,9 @@ class ChomboParameters
                     boundary_params.vars_parity[c_B1] = 1;
                     boundary_params.vars_parity[c_B2] = 2;
                     boundary_params.vars_parity[c_B3] = 3;
+                    boundary_params.vars_parity[c_Gamma1] = 1;
+                    boundary_params.vars_parity[c_Gamma2] = 2;
+                    boundary_params.vars_parity[c_Gamma3] = 3;
                 }
                 if ((boundary_params.hi_boundary[idir] ==
                      BoundaryConditions::SOMMERFELD_BC) ||
