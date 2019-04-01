@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH -N 1
+#SBATCH -N 4
 #SBATCH --ntasks-per-node=10
 #SBATCH --cpus-per-task=2
 #SBATCH --constraint="ivybridge-ep"

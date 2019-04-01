@@ -1,9 +1,9 @@
 #!/bin/bash
-#SBATCH -N 1
+#SBATCH -N 3
 #SBATCH --ntasks-per-node=8
 #SBATCH --cpus-per-task=2
 #SBATCH --constraint="sandybridge-ep"
-#SBATCH --time=1:00:00 
+#SBATCH --time=24:00:00 
 #SBATCH --partition testing
 
 module purge
