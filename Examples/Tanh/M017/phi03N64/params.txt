@@ -1,10 +1,10 @@
 #Params for runtime inputs
 
 verbosity = 0
-chk_prefix = T017N64_phi04_
-plot_prefix = T017N64_phi04_P_
+chk_prefix = T017N64_phi03_
+plot_prefix = T017N64_phi03_P_
 initial_data_prefix = Oscilloton_data_iso/
-restart_file = T017N64_phi04_000344.3d.hdf5
+restart_file = T017N64_phi03_000312.3d.hdf5
 
 # Set up grid spacings and regrid params
 # NB - the N values need to be multiples of block_factor
@@ -20,7 +20,7 @@ L = 64
 # Thresholds on the change across a cell which prompts regrid
 regrid_threshold = 0.5
 regrid_threshold_chi = 0.5
-regrid_threshold_phi = 0.5
+regrid_threshold_phi = 0.45
 
 # Level data
 # Maximum number of times you can regrid above coarsest level

@@ -30,7 +30,7 @@ max_level = 8 # There are (max_level+1) grids, so min is zero
 # Generally you do not need to regrid frequently on every level
 regrid_interval = 0 0 0 0 8 8 8 8 8 8 8 8
 # Max box size
-max_grid_size = 8
+max_grid_size = 16
 # Min box size
 block_factor = 8
 
