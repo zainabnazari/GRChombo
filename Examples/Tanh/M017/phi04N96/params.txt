@@ -4,7 +4,7 @@ verbosity = 0
 chk_prefix = T017N96_phi04_
 plot_prefix = T017N96_phi04_P_
 initial_data_prefix = Oscilloton_data_iso/
-#restart_file = T017N96_phi04_000500.3d.hdf5
+restart_file = T017N96_phi04_000570.3d.hdf5
 
 # Set up grid spacings and regrid params
 # NB - the N values need to be multiples of block_factor
@@ -40,7 +40,7 @@ block_factor = 8
 checkpoint_interval = 12
 plot_interval = 12
 dt_multiplier = 0.05
-stop_time = 30.0
+stop_time = 21.0
 max_steps = 10000000
 
 #Lapse evolution

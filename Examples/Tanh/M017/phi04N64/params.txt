@@ -4,11 +4,8 @@ verbosity = 0
 chk_prefix = T017N64_phi04_
 plot_prefix = T017N64_phi04_P_
 initial_data_prefix = Oscilloton_data_iso/
-<<<<<<< HEAD
-restart_file = T017N64_phi04_000344.3d.hdf5
-=======
+restart_file = T017N64_phi04_000380.3d.hdf5
 #restart_file = T017N64_phi04_000500.3d.hdf5
->>>>>>> 9fae436f7b165576ff60f571487d8207ed71389c
 
 # Set up grid spacings and regrid params
 # NB - the N values need to be multiples of block_factor
@@ -24,11 +21,7 @@ L = 64
 # Thresholds on the change across a cell which prompts regrid
 regrid_threshold = 0.5
 regrid_threshold_chi = 0.5
-<<<<<<< HEAD
-regrid_threshold_phi = 0.5
-=======
 regrid_threshold_phi = 1.0
->>>>>>> 9fae436f7b165576ff60f571487d8207ed71389c
 
 # Level data
 # Maximum number of times you can regrid above coarsest level
@@ -48,7 +41,7 @@ block_factor = 8
 checkpoint_interval = 8
 plot_interval = 8
 dt_multiplier = 0.05
-stop_time = 30.0
+stop_time = 21.0
 max_steps = 10000000
 
 #Lapse evolution
