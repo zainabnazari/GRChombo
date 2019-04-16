@@ -28,7 +28,7 @@ max_level = 8 # There are (max_level+1) grids, so min is zero
 # Frequency of regridding at each level
 # Need one for each level, ie max_level+1 items
 # Generally you do not need to regrid frequently on every level
-regrid_interval = 16 16 16 16 16 16 16 16 16 16 16 16
+regrid_interval = 64 64 64 64 64 64 64 64 64 64 64 64 64 64
 # Max box size
 max_grid_size = 8
 # Min box size
