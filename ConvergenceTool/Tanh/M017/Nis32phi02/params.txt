@@ -1,0 +1,32 @@
+#Params for runtime inputs
+N1 = 32
+N2 = 32
+N3 = 32
+
+chk_prefix = /home/fmuia/GRChomboNew/GRChombo/Examples/Tanh/M017/phi02N32/T017N32_phi02_P_
+restart_file = /home/fmuia/GRChomboNew/GRChombo/Examples/Tanh/M017/phi02N32/T017N32_phi02_P_000000.3d.hdf5
+
+checkpoint_interval = 8
+start_file = 0
+num_files = 625
+verbosity = 1
+
+base_dx = 0.8 #probably needs to be at least 3 times dx_min
+num_points = 100 # number of points in radial direction
+
+# PROBABLY DONT NEED TO CHANGE FROM HERE
+# Likely the same for all resolutions
+L = 64
+max_level = 8 # There are (max_level+1) grids, so min is zero
+regrid_interval = 64 64 64 64 64 64 64 64 64 64 64
+max_grid_size = 16
+block_factor = 8
+plot_prefix = PlotFile
+dt_multiplier = 0.1
+stop_time = 1000.0
+isPeriodic = 1 1 1
+# if not periodic, then specify the boundary type
+# 0 = static, 1 = sommerfeld, 2 = symmetric
+hi_boundary = 1 1 1
+lo_boundary = 2 2 2
+center = 0 0 0
