@@ -74,7 +74,7 @@ class OscillotonTaggingCriterion
         data_t criterion = simd_max(criterion_chi, criterion_phi);
 
         // regrid if within extraction level and not at required refinement
-        double L = 64;
+        double L = 64.0;
         if (m_level == 0)
         {
             const Coordinates<data_t> coords(current_cell, m_dx);
