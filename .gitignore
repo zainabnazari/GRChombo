@@ -1,3 +1,5 @@
+.bashrc
+jobscript*
 pout*
 my_extraction*
 *.pbs
