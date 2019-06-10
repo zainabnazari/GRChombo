@@ -150,12 +150,12 @@ void ScalarFieldLevel::specificPostTimeStep()
 {
     if (m_level == 2)
     {
-        pout() << "Do extraction " << endl;
         m_gr_amr.m_interpolator->refresh();
         CustomExtraction my_extraction(m_p.L, m_p.center, 
                                        m_time, m_dt, m_restart_time);
+        std::string extraction_filename = m_p.checkpoint_prefix + "Extraction.txt";
         my_extraction.execute_query(m_gr_amr.m_interpolator,
-           "ExtractionOutput.txt");
+           extraction_filename);
     }
 }
 

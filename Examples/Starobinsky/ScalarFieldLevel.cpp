@@ -23,6 +23,7 @@
 // Problem specific includes
 #include "ChiRelaxation.hpp"
 #include "ComputePack.hpp"
+#include "CustomExtraction.hpp"
 #include "GammaCalculator.hpp"
 #include "Potential.hpp"
 #include "OscillotonInitial.hpp"
@@ -143,6 +144,19 @@ void ScalarFieldLevel::specificWritePlotHeader(
     std::vector<int> &plot_states) const
 {
     plot_states = {c_phi, c_chi, c_lapse, c_Ham, c_VofPhi};
+}
+
+void ScalarFieldLevel::specificPostTimeStep()
+{
+    if (m_level == 2)
+    {
+        m_gr_amr.m_interpolator->refresh();
+        CustomExtraction my_extraction(m_p.L, m_p.center, 
+                                       m_time, m_dt, m_restart_time);
+        std::string extraction_filename = m_p.checkpoint_prefix + "Extraction.txt";
+        my_extraction.execute_query(m_gr_amr.m_interpolator,
+           extraction_filename);
+    }
 }
 
 void ScalarFieldLevel::computeTaggingCriterion(FArrayBox &tagging_criterion,
