@@ -148,7 +148,7 @@ void ScalarFieldLevel::specificWritePlotHeader(
 
 void ScalarFieldLevel::specificPostTimeStep()
 {
-    if (m_level == 2)
+    if (m_level == (m_p.extraction_params.extraction_level - 1))
     {
         m_gr_amr.m_interpolator->refresh();
         CustomExtraction my_extraction(m_p.L, m_p.center, 

@@ -76,7 +76,7 @@ sign_of_Pi = +1
 
 # Extraction Level
 extraction_radius = 2.0
-extraction_level = 5
+extraction_level = 2
 
 #Periodic directions - 0 = false, 1 = true
 isPeriodic = 0 0 0
