@@ -76,22 +76,19 @@ class CustomExtraction
         a_interpolator->interp(query);
 
         // write out
-        pout() << "write out data" << endl;
         SmallDataIO extraction_file(a_filename, m_dt, m_time, m_restart_time,
                                            SmallDataIO::APPEND);
         extraction_file.remove_duplicate_time_data();
         if (m_time == m_dt)
         {
             // make header strings if at first timestep
-            std::vector<std::string> header1_strings(num_comps);
-            header1_strings[0] = "time";
-            header1_strings[1] = "chi";
-            header1_strings[2] = "phi";
-            header1_strings[3] = "lapse";
+            std::vector<std::string> header1_strings(num_comps*num_points);
+            header1_strings[0] = "chi";
+            header1_strings[1] = "phi";
+            header1_strings[2] = "lapse";
             extraction_file.write_header_line(header1_strings);
         }
-        std::vector<double> data_for_writing(1 + num_comps);
-        data_for_writing[0] = m_time;
+        std::vector<double> data_for_writing(num_comps*num_points);
         data_for_writing[1] = interp_comp1[0];
         data_for_writing[2] = interp_comp2[0];
         data_for_writing[3] = interp_comp3[0];

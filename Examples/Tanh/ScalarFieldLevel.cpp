@@ -155,7 +155,7 @@ void ScalarFieldLevel::specificPostTimeStep()
         CustomExtraction my_extraction(m_p.L, m_p.center, 
                                        m_time, m_dt, m_restart_time);
         my_extraction.execute_query(m_gr_amr.m_interpolator,
-                                    "ExtractionOutput.txt");
+           "ExtractionOutput.txt");
     }
 }
 
