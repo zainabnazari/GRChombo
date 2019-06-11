@@ -31,6 +31,11 @@ int runGRChombo(int argc, char *argv[])
                                                                   sim_params);
     setupAMRObject(gr_amr, scalar_field_level_fact);
 
+    // setup interpolator
+    AMRInterpolator<Lagrange<4>> interpolator(
+        gr_amr, sim_params.origin, sim_params.dx, sim_params.verbosity);
+    gr_amr.set_interpolator(&interpolator);
+
     double stop_time;
     pp.get("stop_time", stop_time);
     int max_steps;

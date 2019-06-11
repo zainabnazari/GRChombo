@@ -53,6 +53,9 @@ class ScalarFieldLevel : public GRAMRLevel
     //! Specify which variables to write at plot intervals
     virtual void specificWritePlotHeader(std::vector<int> &plot_states) const;
 
+    //! Things to do after taking a (final) timestep
+    virtual void specificPostTimeStep();
+
     //! Tell Chombo how to tag cells for regridding
     virtual void computeTaggingCriterion(FArrayBox &tagging_criterion,
                                          const FArrayBox &current_state);
