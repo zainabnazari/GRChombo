@@ -80,7 +80,7 @@ class OscillotonTaggingCriterion
             center.fill(0.0);
             const Coordinates<data_t> coords(current_cell, m_dx, center);
             const data_t r = coords.get_radius();
-            data_t regrid = simd_compare_lt(r, m_params.extraction_radius);
+            auto regrid = simd_compare_lt(r, m_params.extraction_radius);
             criterion = simd_conditional(regrid, 1.0, criterion);
         }
 
