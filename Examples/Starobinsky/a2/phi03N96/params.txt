@@ -4,7 +4,7 @@ verbosity = 0
 chk_prefix = Sa2N96_phi03_
 plot_prefix = Sa2N96_phi03_P_
 initial_data_prefix = Oscilloton_data_iso/
-restart_file = Sa2N96_phi03_006000.3d.hdf5
+#restart_file = Sa2N96_phi03_006000.3d.hdf5
 
 # Set up grid spacings and regrid params
 # NB - the N values need to be multiples of block_factor
