@@ -9,32 +9,31 @@
 // (MR): if it were up to me, I'd be using the C++17 filesystems library
 // instead of cstdio but I'm sure someone would tell me off for not maintaining
 // backwards compatability.
-#include <cstdio>
-#include <vector>
-#include <fstream>
-#include <iostream>
-#include <iomanip>
-#include <string>
-#include <cmath>
 #include "SPMD.H" // for Chombo_MPI
+#include <cmath>
+#include <cstdio>
+#include <fstream>
+#include <iomanip>
+#include <iostream>
+#include <sstream>
+#include <string>
+#include <vector>
 
-
-//! A class for writing small data to a file in ASCII format.
+//! A class for reading and writing small data to a file in ASCII format.
 /*!
-    A class for writing small data, usually 0D, 1D or 2D, to a file in ASCII
-    format. This can be used in specificPostTimeStep in a GRAMRLevel child
-    class or in functions that are called at this point. For an example on how
-    to use it, see the WeylExtraction class.
+    A class for reading and writing small data, usually 0D, 1D or 2D, in ASCII
+    format. For an example on how to use it, see the WeylExtraction class.
 */
 class SmallDataIO
 {
   public:
-    //! Choose between appending data to the same file or writing to a new file
-    //! at each timestep
+    //! Choose between appending data to the same file, writing to a new file
+    //! at each timestep or reading a file.
     enum Mode
     {
         APPEND, // data is APPENDed to the same file at each timestep
-        NEW     // data is written to a NEW file at each timestep
+        NEW,    // data is written to a NEW file at each timestep
+        READ    // read data
     };
 
   protected:
@@ -60,8 +59,7 @@ class SmallDataIO
                 int a_data_precision = 10, int a_coords_precision = 7)
         : m_filename(a_filename), m_dt(a_dt), m_time(a_time),
           m_restart_time(a_restart_time), m_mode(a_mode),
-          m_first_step(a_first_step),
-          m_data_precision(a_data_precision),
+          m_first_step(a_first_step), m_data_precision(a_data_precision),
           // data columns need extra space for scientific notation
           // compared to coords columns
           m_data_width(m_data_precision + 10),
@@ -97,12 +95,20 @@ class SmallDataIO
                     file_openmode = std::ios::app;
                 }
             }
-            else
+            else if (m_mode == NEW)
             {
                 file_openmode = std::ios::out;
                 m_step = std::round(m_time / m_dt);
                 // append step number to filename if in NEW mode
                 m_filename += std::to_string(m_step);
+            }
+            else if (m_mode == READ)
+            {
+                file_openmode = std::ios::in;
+            }
+            else
+            {
+                MayDay::Error("SmallDataIO: mode not supported");
             }
             m_file.open(m_filename, file_openmode);
             if (!m_file)
@@ -119,7 +125,16 @@ class SmallDataIO
                 int a_coords_precision = 7)
         : SmallDataIO(a_filename, a_dt, a_time, a_restart_time, a_mode,
                       (a_time == a_dt), a_data_precision, a_coords_precision)
-    {}
+    {
+    }
+
+    //! Constructor for reading when m_time, m_dt, m_restart_time are irrelevant
+    SmallDataIO(std::string a_filename, int a_data_precision = 10,
+                int a_coords_precision = 7)
+        : SmallDataIO(a_filename, 0.0, 0.0, 0.0, READ, false, a_data_precision,
+                      a_coords_precision)
+    {
+    }
 
     //! Destructor (closes file)
     ~SmallDataIO()
@@ -133,6 +148,8 @@ class SmallDataIO
     // disable default copy constructor and assignment operator
     SmallDataIO(const SmallDataIO &) = delete;
     SmallDataIO &operator=(const SmallDataIO &) = delete;
+
+    // ------------ Writing Functions ------------
 
     //! Writes a header_line
     //! Use this for 0D or 1D data, where the first column is either the time
@@ -170,6 +187,23 @@ class SmallDataIO
     //! if restarting from an earlier checkpoint file, this function removes
     //! any time data that will be replaced.
     void remove_duplicate_time_data();
+
+    // ------------ Reading Functions ------------
+
+    //! Get the data associated to specific coordinates from the file
+    //! Note only the first line with the given coordinates is obtained
+    void get_specific_data_line(std::vector<double> &a_out_data,
+                                const std::vector<double> a_coords);
+
+    //! Get the data associated to a specific coordinate (e.g. time) from the
+    //! file
+    void get_specific_data_line(std::vector<double> &a_out_data,
+                                const double a_coord);
+
+    //! Read a file of data into a vector of arrays of length CH_SPACEDIM+1
+    //! useful for read in of grid data (x, y, z, value)
+    void get_data_array(
+        std::vector<std::array<double, CH_SPACEDIM + 1>> &a_out_data);
 };
 
 #endif /* SMALLDATAIO_HPP_ */
