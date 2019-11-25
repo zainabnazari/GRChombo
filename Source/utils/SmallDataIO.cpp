@@ -5,6 +5,8 @@
 
 #include "SmallDataIO.hpp"
 
+// ------------ Writing Functions ------------
+
 void SmallDataIO::write_header_line(
     const std::vector<std::string> &a_header_strings,
     const std::string &a_pre_header_string)
@@ -118,5 +120,124 @@ void SmallDataIO::remove_duplicate_time_data()
         std::rename(temp_filename.data(), m_filename.data());
         // reopen the file in append mode
         m_file.open(m_filename, std::ios::app);
+    }
+}
+
+// ------------ Reading Functions ------------
+
+void SmallDataIO::get_specific_data_line(std::vector<double> &a_out_data,
+                                         const std::vector<double> a_coords)
+{
+    if (m_rank == 0)
+    {
+        bool line_found = false;
+        // first set the current position to the beginning of the file
+        m_file.seekg(0);
+
+        // get a string of the coords as they are in the file
+        std::stringstream coords_ss;
+        coords_ss << std::fixed << std::setprecision(m_coords_precision);
+        for (double coord : a_coords)
+        {
+            coords_ss << std::setw(m_coords_width) << coord;
+        }
+        std::string coords_string = coords_ss.str();
+
+        // now search for lines that start with coords_string and put the data
+        // in a_out_data
+        std::string line;
+        while (std::getline(m_file, line))
+        {
+            if (!(line.find(coords_string) == std::string::npos))
+            {
+                for (int ichar = a_coords.size() * m_coords_width;
+                     ichar < line.size(); ichar += m_data_width)
+                {
+                    double data_value =
+                        std::stod(line.substr(ichar, m_data_width));
+                    a_out_data.push_back(data_value);
+                }
+                line_found = true;
+                // only want the first occurrence so break the while loop
+                break;
+            }
+        }
+        if (!line_found)
+        {
+            MayDay::Error(
+                "SmallDataIO : Data to be read in at coord not found in file");
+        }
+    }
+    // now broadcast the vector to all ranks using Chombo broadcast function
+    // need to convert std::vector to Vector first
+    Vector<double> data_Vect(a_out_data);
+    int broadcast_rank = 0;
+    broadcast(data_Vect, broadcast_rank);
+    a_out_data = data_Vect.stdVector();
+}
+
+void SmallDataIO::get_specific_data_line(std::vector<double> &a_out_data,
+                                         const double a_coord)
+{
+    std::vector<double> coords(1, a_coord);
+    get_specific_data_line(a_out_data, coords);
+}
+
+// for read in of fixed size CH_SPACEDIM +1 - for spatial coords + var data)
+void SmallDataIO::get_data_array(
+    std::vector<std::array<double, CH_SPACEDIM + 1>> &a_out_data)
+{
+    // need Vector formats for broadcast
+    Vector<double> x_Vect;
+    Vector<double> y_Vect;
+    Vector<double> z_Vect;
+    Vector<double> data_Vect;
+
+    if (m_rank == 0)
+    {
+        // set the current position to the beginning of the file
+        m_file.seekg(0);
+        std::string line;
+        // loop through the lines
+        while (std::getline(m_file, line))
+        {
+            int data_width = line.size() / (CH_SPACEDIM + 1);
+            // first read in the coords
+            for (int icoord = 0; icoord < CH_SPACEDIM; icoord++)
+            {
+                double coord_value =
+                    std::stod(line.substr(icoord * data_width, data_width));
+                if (icoord == 0)
+                {
+                    x_Vect.push_back(coord_value);
+                }
+                else if (icoord == 1)
+                {
+                    y_Vect.push_back(coord_value);
+                }
+                else if (icoord == 2)
+                {
+                    z_Vect.push_back(coord_value);
+                }
+            }
+            // now the data value
+            double data_value =
+                std::stod(line.substr(CH_SPACEDIM * data_width, data_width));
+            data_Vect.push_back(data_value);
+        }
+    }
+    // now broadcast the vector to all ranks using Chombo broadcast function
+    int broadcast_rank = 0;
+    broadcast(x_Vect, broadcast_rank);
+    broadcast(y_Vect, broadcast_rank);
+    broadcast(z_Vect, broadcast_rank);
+    broadcast(data_Vect, broadcast_rank);
+
+    // finally convert the Vector into the array format required
+    a_out_data.resize(data_Vect.size());
+    for (int iline = 0; iline < data_Vect.size(); iline++)
+    {
+        a_out_data[iline] = {x_Vect[iline], y_Vect[iline], z_Vect[iline],
+                             data_Vect[iline]};
     }
 }
