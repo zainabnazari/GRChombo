@@ -54,12 +54,12 @@ void ScalarFieldLevel::initialData()
 
     // Then read in the data for interpolation - need to provide the precision
     // for the coord and data values in the file
-    SmallDataIO input_file_Pi("TestData/Pi001_cartesian.txt", m_dt, m_time,
+    SmallDataIO input_file_Pi("TestData/field.txt", m_dt, m_time,
                               m_restart_time, SmallDataIO::READ, true);
     std::vector<std::array<double, CH_SPACEDIM + 1>> Pi_data;
     input_file_Pi.get_data_array(Pi_data);
 
-    SmallDataIO input_file_chi("TestData/chi001_cartesian.txt", m_dt, m_time,
+    SmallDataIO input_file_chi("TestData/dfield.txt", m_dt, m_time,
                                m_restart_time, SmallDataIO::READ, true);
     std::vector<std::array<double, CH_SPACEDIM + 1>> chi_data;
     input_file_chi.get_data_array(chi_data);
