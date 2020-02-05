@@ -31,7 +31,7 @@
 // Things to do at each advance step, after the RK4 is calculated
 void ScalarFieldLevel::specificAdvance()
 {
-    // Enforce trace free A_ij and positive chi and alpha
+    // Enforce trace free A_ij and positive Pi and alpha
     BoxLoops::loop(make_compute_pack(TraceARemoval(), PositiveChiAndAlpha()),
                    m_state_new, m_state_new, INCLUDE_GHOST_CELLS);
 
@@ -54,20 +54,20 @@ void ScalarFieldLevel::initialData()
 
     // Then read in the data for interpolation - need to provide the precision
     // for the coord and data values in the file
-    SmallDataIO input_file_Pi("TestData/field.txt", m_dt, m_time,
+    SmallDataIO input_file_phi("TestData/field.txt", m_dt, m_time,
                               m_restart_time, SmallDataIO::READ, true);
+    std::vector<std::array<double, CH_SPACEDIM + 1>> phi_data;
+    input_file_phi.get_data_array(phi_data);
+
+    SmallDataIO input_file_Pi("TestData/dfield.txt", m_dt, m_time,
+                               m_restart_time, SmallDataIO::READ, true);
     std::vector<std::array<double, CH_SPACEDIM + 1>> Pi_data;
     input_file_Pi.get_data_array(Pi_data);
 
-    SmallDataIO input_file_chi("TestData/dfield.txt", m_dt, m_time,
-                               m_restart_time, SmallDataIO::READ, true);
-    std::vector<std::array<double, CH_SPACEDIM + 1>> chi_data;
-    input_file_chi.get_data_array(chi_data);
-
     // Then interpolate data
     BoxLoops::loop(make_compute_pack(
-                       VarDataInterpolation(m_dx, c_Pi, m_p.center, Pi_data),
-                       VarDataInterpolation(m_dx, c_chi, m_p.center, chi_data)),
+                       VarDataInterpolation(m_dx, c_phi, m_p.center, phi_data),
+                       VarDataInterpolation(m_dx, c_Pi, m_p.center, Pi_data)),
                    m_state_new, m_state_new, INCLUDE_GHOST_CELLS,
                    disable_simd());
 }
@@ -87,7 +87,7 @@ void ScalarFieldLevel::preCheckpointLevel()
 void ScalarFieldLevel::specificEvalRHS(GRLevelData &a_soln, GRLevelData &a_rhs,
                                        const double a_time)
 {
-    // Enforce trace free A_ij and positive chi and alpha
+    // Enforce trace free A_ij and positive Pi and alpha
     BoxLoops::loop(make_compute_pack(TraceARemoval(), PositiveChiAndAlpha()),
                    a_soln, a_soln, INCLUDE_GHOST_CELLS);
 
@@ -117,7 +117,7 @@ void ScalarFieldLevel::specificUpdateODE(GRLevelData &a_soln,
 void ScalarFieldLevel::specificWritePlotHeader(
     std::vector<int> &plot_states) const
 {
-    plot_states = {c_phi, c_chi};
+    plot_states = {c_phi, c_Pi};
 }
 
 void ScalarFieldLevel::computeTaggingCriterion(FArrayBox &tagging_criterion,

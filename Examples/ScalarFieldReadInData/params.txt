@@ -7,13 +7,13 @@ plot_prefix = ScalarFieldp_
 
 # Set up grid spacings and regrid params
 # NB - the N values need to be multiples of block_factor
-N1 = 32
-N2 = 32
-N3 = 32
+N1 = 16
+N2 = 16
+N3 = 16
 
 # Length of longest box side, dx_coarsest = L/N(max)
 # NB if non cubic, this determines dx for all sides
-L =  64
+L =  16
 
 # Level data
 # Maximum number of times you can regrid above coarsest level
@@ -91,4 +91,5 @@ sigma = 0.3
 # G_Newton = 1.0
 
 # SF Initial data
+
 scalar_mass = 1.0

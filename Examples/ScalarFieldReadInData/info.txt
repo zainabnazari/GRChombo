@@ -1,0 +1,11 @@
+folders:
+-reheating:
+is the one that contains the code and the main job of the reheating that our project is all about:
+so far it has the following changes compared with the raw scalarfieldReadin folders/file that Katy put in it:
+ - In the TestData folder it contains the python file that initiate/ generate field and derivative of the field
+ - In the TestData folder there are two txt files of the data of field and field derivative, dfield.txt and field.txt 
+ - In the param file the value of N1, N2, N3 are equals to 16, ao do as L=16, so it matches with the initail values of field and derivative of the field
+ - In the ScalarFieldLevel.cpp all the Pi is replaced with the phi, and all the chi is replaced with Pi everywhere.
+ - In the ScalarFieldlevel.cpp the place where the initial field and field derivative is called the name has been changed accordingly.
+- Chombo:
+ because of an error occurrence we need to make a copy of Chombo folder and turn the debuging option on to better see where the error is, this makes the run slow, however, we can see more info. 
