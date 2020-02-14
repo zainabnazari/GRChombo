@@ -88,7 +88,7 @@ sigma = 0.3
 
 # Change the gravitational constant of the Universe!
 # Default is 1.0, for standard geometric units
-# G_Newton = 1.0
+# G_Newton = 0
 
 # SF Initial data
 
