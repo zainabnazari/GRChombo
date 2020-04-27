@@ -1,9 +1,9 @@
 #Params for runtime inputs
 
 verbosity = 0
-chk_prefix = /home/dc-cui1/rds/rds-dirac-dp131/dc-cui1/T02N64_phi03_
-plot_prefix = /home/dc-cui1/rds/rds-dirac-dp131/dc-cui1/T02N64_phi03_P_
-initial_data_prefix = /home/dc-cui1/ForkedGRC/GRChombo/Examples/Tanh/M02/phi02N64/Oscilloton_data_iso/
+chk_prefix = /marconi_scratch/userexternal/znazari0/tanh/T02N64_phi03_
+plot_prefix=/marconi_scratch/userexternal/znazari0/tanh/T02N64_phi03_P_
+initial_data_prefix = /marconi/home/userexternal/znazari0/GRChombo/InitialDataOscillotons/phi0.4/
 #restart_file = T02N64_phi03_000370.3d.hdf5
 
 # Set up grid spacings and regrid params
