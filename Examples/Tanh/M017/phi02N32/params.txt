@@ -1,8 +1,8 @@
 #Params for runtime inputs
 
 verbosity = 0
-chk_prefix = T017N32_phi02_
-plot_prefix = T017N32_phi02_P_
+chk_prefix =/marconi_scratch/userexternal/znazari0/tanh/m017/phi02N32/T017N32_phi02_
+plot_prefix = /marconi_scratch/userexternal/znazari0/tanh/m017/phi02N32/T017N32_phi02_P_
 initial_data_prefix = Oscilloton_data_iso/
 #restart_file = T017N64_phi04_000380.3d.hdf5
 #restart_file = T017N64_phi04_000500.3d.hdf5

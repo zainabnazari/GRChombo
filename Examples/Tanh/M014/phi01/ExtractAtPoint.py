@@ -1,5 +1,5 @@
 import yt
-from yt import derived_field
+#from yt import derived_field
 import numpy as np
 #from numpy.linalg import inv
 #from scipy.interpolate import interp1d
@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 #yt.enable_parallelism()
 
 #Loading dataset
-loc = '/home/fmuia/GRChomboNew/GRChombo/Examples/Tanh/M014/phi01/T014_phi01_P_00**'
+loc = '/marconi_scratch/userexternal/znazari0/tanh/m014/phi01/T014_phi01_P_00*'
 ds = yt.load(loc)
 
 #from mpi4py import MPI

@@ -1,5 +1,5 @@
 import yt
-from yt import derived_field
+#from yt import derived_field
 import numpy as np
 #from numpy.linalg import inv
 #from scipy.interpolate import interp1d
@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 #yt.enable_parallelism()
 
 #Loading dataset
-loc = '/marconi_scratch/userexternal/znazari0/tanh/m014/phi02/T014_phi02_P_00**'
+loc = '/marconi_scratch/userexternal/znazari0/tanh/m014/phi01/T014_phi01_P_00*'
 ds = yt.load(loc)
 
 #from mpi4py import MPI
@@ -22,12 +22,12 @@ ds = yt.load(loc)
 location =  np.array([0,0,0])
 #location =  ds[0].domain_right_edge/2
 #variable = 'VofPhi'
-variable = 'phi'
+variable = 'chi'
 time_data = []
 var_data = []
 CycleData = []
 #filename = 'VofPhiT02.txt'
-filename = 'phi02T014.txt'
+filename = 'chi01T014.txt'
 
 last_current_time = 0
 proper_time = 0
