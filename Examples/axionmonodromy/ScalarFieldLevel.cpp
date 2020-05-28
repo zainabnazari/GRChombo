@@ -148,7 +148,7 @@ void ScalarFieldLevel::specificWritePlotHeader(
 
 void ScalarFieldLevel::specificPostTimeStep()
 {
-    if (m_level == (m_p.extraction_params.extraction_level - 1))
+    if (m_level == (m_p.min_level))
     {
         m_gr_amr.m_interpolator->refresh();
         CustomExtraction my_extraction(m_p.L, m_p.center, 
@@ -162,8 +162,8 @@ void ScalarFieldLevel::specificPostTimeStep()
 void ScalarFieldLevel::computeTaggingCriterion(FArrayBox &tagging_criterion,
                                                const FArrayBox &current_state)
 {
-    BoxLoops::loop(OscillotonTaggingCriterion(m_dx, m_p.regrid_threshold_chi, m_p.regrid_threshold_phi, 
-                                              m_p.regrid_cutoff_phi, m_level,
-                                              m_p.extraction_params),
+    // NB the full length of the grid is 2*L since we only simulate half the box
+    BoxLoops::loop(OscillotonTaggingCriterion(m_dx, m_p.min_level, m_level, 2.0*m_p.L, 
+                   m_p.center),
                    current_state, tagging_criterion);
 }

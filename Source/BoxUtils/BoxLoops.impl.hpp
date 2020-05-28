@@ -16,17 +16,21 @@
 #include "simd.hpp"
 
 template <typename... compute_ts>
-ALWAYS_INLINE void
-BoxLoops::innermost_loop(const ComputePack<compute_ts...> &compute_pack,
-                         const BoxPointers &box_pointers, const int iy,
-                         const int iz, const int loop_lo_x, const int loop_hi_x)
+void BoxLoops::innermost_loop(const ComputePack<compute_ts...> &compute_pack,
+                              const BoxPointers &box_pointers, const int iy,
+                              const int iz, const int loop_lo_x,
+                              const int loop_hi_x)
 {
     int simd_width = simd<double>::simd_len;
     int x_simd_max =
         loop_lo_x +
         simd_width * (((loop_hi_x - loop_lo_x + 1) / simd_width) - 1);
 // SIMD LOOP
+#ifdef __INTEL_COMPILER
 #pragma novector
+#else
+#pragma omp simd safelen(1)
+#endif /* __INTEL_COMPILER */
     for (int ix = loop_lo_x; ix <= x_simd_max; ix += simd_width)
     {
         compute_pack.call_compute(
@@ -42,11 +46,10 @@ BoxLoops::innermost_loop(const ComputePack<compute_ts...> &compute_pack,
 }
 
 template <typename... compute_ts>
-ALWAYS_INLINE void
-BoxLoops::innermost_loop(const ComputePack<compute_ts...> &compute_pack,
-                         const BoxPointers &box_pointers, const int iy,
-                         const int iz, const int loop_lo_x, const int loop_hi_x,
-                         disable_simd)
+void BoxLoops::innermost_loop(const ComputePack<compute_ts...> &compute_pack,
+                              const BoxPointers &box_pointers, const int iy,
+                              const int iz, const int loop_lo_x,
+                              const int loop_hi_x, disable_simd)
 {
     for (int ix = loop_lo_x; ix <= loop_hi_x; ++ix)
     {

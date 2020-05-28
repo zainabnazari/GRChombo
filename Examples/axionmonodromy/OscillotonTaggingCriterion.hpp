@@ -18,15 +18,11 @@ class OscillotonTaggingCriterion
 {
   protected:
     const double m_dx;
+    const double m_L;
     const FourthOrderDerivatives m_deriv;
-    const double m_threshold_chi;
-    const double m_threshold_phi;
-    const double m_cutoff_phi;
     const int m_level;
-    const extraction_params_t m_params;
-
-    template <class data_t>
-    using MatterVars = typename ScalarField<>::template Vars<data_t>;
+    const int m_min_level;
+    const std::array<double, CH_SPACEDIM> m_center;
 
     /// Vars object for chi
     template <class data_t> struct Vars
@@ -43,58 +39,38 @@ class OscillotonTaggingCriterion
     };
 
   public:
-    OscillotonTaggingCriterion(
-        const double dx, const double threshold_chi, const double threshold_phi,
-        const double cutoff_phi,
-        const int a_level, const extraction_params_t a_params)
-        : m_dx(dx), m_deriv(dx), m_threshold_chi(threshold_chi),
-          m_cutoff_phi(cutoff_phi), m_threshold_phi(threshold_phi), m_params(a_params),
-          m_level(a_level){};
+    OscillotonTaggingCriterion(const double dx, const int a_min_level,
+                               const int a_level, const double a_L,
+                               const std::array<double, CH_SPACEDIM> a_center)
+        : m_dx(dx), m_deriv(dx), m_min_level(a_min_level), m_L(a_L),
+          m_level(a_level), m_center(a_center){};
 
     template <class data_t> void compute(Cell<data_t> current_cell) const
     {
-        const auto d2 = m_deriv.template diff2<MatterVars>(current_cell);
         const auto d2chi = m_deriv.template diff2<Vars>(current_cell);
 
         data_t mod_d2_chi = 0;
-        data_t mod_d2_phi = 0;
 
         FOR2(idir, jdir)
         {
            mod_d2_chi += d2chi.chi[idir][jdir] * d2chi.chi[idir][jdir]; 
-
-	   mod_d2_phi += d2.Pi[idir][jdir] * d2.Pi[idir][jdir]
-                      +  d2.phi[idir][jdir] * d2.phi[idir][jdir];
         }
 
-        data_t criterion_chi = m_dx / m_threshold_chi * sqrt(mod_d2_chi);
+        // criterion is primarily based on whether chi gradients high
+        data_t criterion = m_dx * sqrt(mod_d2_chi);
 
-        data_t criterion_phi = m_dx / m_threshold_phi * sqrt(mod_d2_phi);
-
-        data_t criterion = simd_max(criterion_chi, criterion_phi);
-
-        // regrid if within extraction level and not at required refinement
-        if (m_level < m_params.extraction_level)
-	{
-	    std::array<double, CH_SPACEDIM> center;
-            center.fill(0.0);
-            const Coordinates<data_t> coords(current_cell, m_dx, center);
-            const data_t r = coords.get_radius();
-            auto regrid = simd_compare_lt(r, m_params.extraction_radius);
-            criterion = simd_conditional(regrid, 1.0, criterion);
+        // make sure the inner part is regridded up to some level
+        // take L as the length of full grid, so tag inner 1/2
+        // of it, which means inner \pm L/4 (on level zero)
+        const double ratio = pow(2.0, -(m_level + 2.0));
+        const Coordinates<data_t> coords(current_cell, m_dx, m_center);
+        if (abs(coords.y) < m_L * ratio && abs(coords.z) < m_L * ratio
+                                        && m_level <= m_min_level)
+        {
+            auto should_refine = simd_compare_lt(abs(coords.x), m_L * ratio);
+            // just make the criterion big so Chombo definitely tags it
+            criterion = simd_conditional(should_refine, 100.0, criterion);
         }
-
-
-
-
-//        {
-//            const Coordinates<data_t> coords(current_cell, m_dx, m_params.extraction_center);
-//            const data_t r = coords.get_radius();
-//            // add a 20% buffer to extraction zone so not too near to boundary
-//            auto regrid =
-//                simd_compare_lt(r, 1.2 * m_params.extraction_radius);
-//            criterion = simd_conditional(regrid, 1.0, criterion);
-//        }
 
         // Write back into the flattened Chombo box
         current_cell.store_vars(criterion, 0);
