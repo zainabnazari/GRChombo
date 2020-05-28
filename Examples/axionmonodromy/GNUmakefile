@@ -8,6 +8,8 @@
 
 ebase := Main_ScalarField
 
+GRCHOMBO_SOURCE = ../../Source
+
 LibNames := AMRTimeDependent AMRTools BoxTools
 
 src_dirs := $(GRCHOMBO_SOURCE)/utils \

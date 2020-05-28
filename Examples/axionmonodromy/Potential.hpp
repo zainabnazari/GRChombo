@@ -34,12 +34,12 @@ class Potential
     {
         // The potential value at phi
         // m^2 M^2[1-1/\sqrt(1+phi^2/M^2)]
-        float pi = M_PI;
-        V_of_phi = pow(m_params.overall_normalization,2.0)(1-1/sqrt(1+pow(vars.phi,2/pow(m_params.overal_normalisation)))
+        double pi = M_PI;
+//        V_of_phi = pow(m_params.overall_normalization,2.0)(1-1/sqrt(1+pow(vars.phi,2/pow(m_params.overal_normalisation)))
 
         // The potential gradient at phi
         // m^2 *phi/(1+phi^2/M^2)^(3/2)
-        dVdphi = vars.phi/pow(1+pow(vars.phi,2)/(pow(m_params.overal_normalisation,2)),3/2);
+//        dVdphi = vars.phi/pow(1+pow(vars.phi,2)/(pow(m_params.overal_normalisation,2)),3/2);
     }
 };
 
