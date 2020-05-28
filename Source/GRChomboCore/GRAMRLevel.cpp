@@ -320,6 +320,17 @@ void GRAMRLevel::regrid(const Vector<Box> &a_new_grids)
     m_state_old.define(level_domain, NUM_VARS, iv_ghosts);
 }
 
+/// things to do after regridding
+void GRAMRLevel::postRegrid(int a_base_level)
+{
+    // set m_restart_time to same as the coarser level
+    if (m_level > a_base_level && m_coarser_level_ptr != nullptr)
+    {
+        GRAMRLevel *coarser_gr_amr_level_ptr = gr_cast(m_coarser_level_ptr);
+        m_restart_time = coarser_gr_amr_level_ptr->m_restart_time;
+    }
+}
+
 // initialize grid
 void GRAMRLevel::initialGrid(const Vector<Box> &a_new_grids)
 {
@@ -648,8 +659,10 @@ void GRAMRLevel::readCheckpointLevel(HDF5Handle &a_handle)
 
     // reshape state with new grids
     m_state_new.define(level_domain, NUM_VARS, iv_ghosts);
-    const int data_status =
-        read<FArrayBox>(a_handle, m_state_new, "data", level_domain);
+    bool redefine_data = false;
+    Interval comps(0, NUM_VARS - 1);
+    const int data_status = read<FArrayBox>(a_handle, m_state_new, "data",
+                                            level_domain, comps, redefine_data);
     if (data_status != 0)
     {
         MayDay::Error("GRAMRLevel::readCheckpointLevel: file does not contain "
@@ -663,9 +676,10 @@ void GRAMRLevel::writePlotLevel(HDF5Handle &a_handle) const
     if (m_verbosity)
         pout() << "GRAMRLevel::writePlotLevel" << endl;
 
-    // number and index of states to print
-    std::vector<int> plot_states;
-    // to be specified in specific Level class
+    // number and index of states to print. first default to parameter
+    std::vector<int> plot_states = m_p.plot_vars;
+    // but call this which may defined in specific Level class for backwards
+    // compatibility
     specificWritePlotHeader(plot_states);
     int num_states = plot_states.size();
 
@@ -705,38 +719,24 @@ void GRAMRLevel::writePlotLevel(HDF5Handle &a_handle) const
             pout() << header << endl;
 
         const DisjointBoxLayout &levelGrids = m_state_new.getBoxes();
-        IntVect iv_ghosts = m_num_ghosts*IntVect::Unit;
+        IntVect iv_ghosts = m_num_ghosts * IntVect::Unit;
         LevelData<FArrayBox> plot_data(levelGrids, num_states, iv_ghosts);
-        IntVect ghost_vector = IntVect::Zero;
 
-        if (m_p.nonperiodic_boundaries_exist)
+        for (int comp = 0; comp < num_states; comp++)
         {
-            ghost_vector = m_num_ghosts * IntVect::Unit;
-            Box grown_domain_box = m_problem_domain.domainBox();
-            grown_domain_box.grow(ghost_vector);
-            Copier boundary_copier;
-            boundary_copier.ghostDefine(
-                    m_state_new.disjointBoxLayout(),
-                    plot_data.disjointBoxLayout(), grown_domain_box,
-                    ghost_vector, ghost_vector);
-            for (int comp = 0; comp < num_states; comp++)
-            {
-                Interval currentComp(comp, comp);
-                Interval plotComps(plot_states[comp], plot_states[comp]);
-                m_state_new.copyTo(plotComps, plot_data, currentComp, boundary_copier);
-            }
-        }
-        else
-        {
-            for (int comp = 0; comp < num_states; comp++)
-            {
-                Interval currentComp(comp, comp);
-                Interval plotComps(plot_states[comp], plot_states[comp]);
-                m_state_new.copyTo(plotComps, plot_data, currentComp);
-            }
+            Interval currentComp(comp, comp);
+            Interval plotComps(plot_states[comp], plot_states[comp]);
+            m_state_new.copyTo(plotComps, plot_data, currentComp);
         }
 
         plot_data.exchange(plot_data.interval());
+
+        // only need to write ghosts when non periodic BCs exist
+        IntVect ghost_vector = IntVect::Zero;
+        if (m_p.write_plot_ghosts)
+        {
+            ghost_vector = m_num_ghosts * IntVect::Unit;
+        }
 
         // Write the data for this level
         write(a_handle, levelGrids);
@@ -749,9 +749,10 @@ void GRAMRLevel::writePlotHeader(HDF5Handle &a_handle) const
     if (m_verbosity)
         pout() << "GRAMRLevel::writePlotHeader" << endl;
 
-    // number and index of states to print
-    std::vector<int> plot_states;
-    // to be specified in specific Level class
+    // number and index of states to print. first default to parameter
+    std::vector<int> plot_states = m_p.plot_vars;
+    // but call this which may defined in specific Level class for backwards
+    // compatibility
     specificWritePlotHeader(plot_states);
     int num_states = plot_states.size();
 

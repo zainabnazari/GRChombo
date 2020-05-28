@@ -3,12 +3,13 @@
  * Please refer to LICENSE in GRChombo's root directory.
  */
 
+#include "CH_Timer.H"
 #include "parstream.H" //Gives us pout()
 #include <chrono>
 #include <iostream>
 
+#include "BHAMR.hpp"
 #include "DefaultLevelFactory.hpp"
-#include "GRAMR.hpp"
 #include "GRParmParse.hpp"
 #include "SetupFunctions.hpp"
 #include "SimulationParameters.hpp"
@@ -27,7 +28,7 @@ int runGRChombo(int argc, char *argv[])
     // The line below selects the problem that is simulated
     // (To simulate a different problem, define a new child of AMRLevel
     // and an associated LevelFactory)
-    GRAMR gr_amr;
+    BHAMR gr_amr;
     DefaultLevelFactory<BinaryBHLevel> binary_bh_level_fact(gr_amr, sim_params);
     setupAMRObject(gr_amr, binary_bh_level_fact);
 

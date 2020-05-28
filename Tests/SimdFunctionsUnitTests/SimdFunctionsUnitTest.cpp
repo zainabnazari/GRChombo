@@ -3,6 +3,7 @@
  * Please refer to LICENSE in GRChombo's root directory.
  */
 
+#include "REAL.H"
 #include "simd.hpp"
 #include <cmath>
 #include <iomanip>
@@ -30,7 +31,11 @@ bool sv_test(const char *name, sop_t sop, vop_t vop)
     auto simd_in = simd<t>::load(vals);
     auto simd_out = vop(simd_in);
 
+#ifdef __INTEL_COMPILER
 #pragma novector
+#else
+#pragma omp simd safelen(1)
+#endif /* __INTEL_COMPILER */
     for (int i = 0; i < simd_length; i++)
         vals[i] = sop(static_cast<t>(i + 1));
 
@@ -58,7 +63,11 @@ bool rv_test(const char *name, op_t op, rev_op_t rev_op)
     constexpr int simd_length = simd_traits<t>::simd_len;
     t vals[simd_length];
 
+#ifdef __INTEL_COMPILER
 #pragma novector
+#else
+#pragma omp simd safelen(1)
+#endif /* __INTEL_COMPILER */
     for (int i = 0; i < simd_length; i++)
         vals[i] = op(i + 1);
     auto simd_in = simd<t>::load(vals);
@@ -106,15 +115,11 @@ bool rv_test(const char *name, op_t op, rev_op_t rev_op)
         }                                                                      \
     } while (0);
 
-#define SV_TEST(op)                                                            \
-    SV_TEST_T(double, op);                                                     \
-    SV_TEST_T(float, op);
+#define SV_TEST(op) SV_TEST_T(Real, op);
 
 #define RV_TEST(op, rev_op)                                                    \
-    RV_TEST_T(double, op, rev_op);                                             \
-    RV_TEST_T(float, op, rev_op);                                              \
-    RV_TEST_T(double, rev_op, op);                                             \
-    RV_TEST_T(float, rev_op, op);
+    RV_TEST_T(Real, op, rev_op);                                               \
+    RV_TEST_T(Real, rev_op, op);
 
 int main()
 {
@@ -134,10 +139,8 @@ int main()
     SV_TEST(cosh(x));
     SV_TEST(tanh(x));
 
-    SV_TEST_T(double, simd_min(x, 0.5));
-    SV_TEST_T(float, simd_min(x, 0.5f));
-    SV_TEST_T(double, simd_max(x, 0.5));
-    SV_TEST_T(float, simd_max(x, 0.5f));
+    SV_TEST_T(Real, simd_min(x, (Real)0.5));
+    SV_TEST_T(Real, simd_max(x, (Real)0.5));
 
     RV_TEST(exp(x), log(x));
     // RV_TEST(pow(x,(decltype(x))2),sqrt(x));
