@@ -32,14 +32,14 @@ class Potential
     void compute_potential(data_t &V_of_phi, data_t &dVdphi,
                            const vars_t<data_t> &vars) const
     {
-        // The potential value at phi
+l        // The potential value at phi
         // m^2 M^2[1-1/\sqrt(1+phi^2/M^2)]
-        float pi = M_PI;
-        V_of_phi = pow(m_params.overall_normalization,2.0)*(1.0-1.0/sqrt(1.0+pow(vars.phi,2.0)/pow(m_params.overall_normalization,2.0)));
+        double pi = M_PI;
+        V_of_phi =(1/(8 M_PI))*pow(m_params.overall_normalization,2.0)*(1.0-1.0/sqrt(1.0+8*M_PI*pow(vars.phi,2.0)/pow(m_params.overall_normalization,2.0)));
         // The potential gradient at phi
         // m^2 *phi/(1+phi^2/M^2)^(3/2)
-        dVdphi = vars.phi/pow(1.0+pow(vars.phi,2.0)/(pow(m_params.overall_normalization,2.0)),3.0/2.0);
+        dVdphi = vars.phi/pow(1.0+8*M_PI*pow(vars.phi,2.0)/(pow(m_params.overall_normalization,2.0)),3.0/2.0);
     }
-};
+};i
 
 #endif /* POTENTIAL_HPP_ */
