@@ -1,8 +1,8 @@
 #Params for runtime inputs
 
 verbosity = 0
-chk_prefix =/marconi_scratch/userexternal/znazari0/yesaxion/M1/phi03/M1_phi03_
-plot_prefix =/marconi_scratch/userexternal/znazari0/yesaxion/M1/phi03/M1_phi03_P_
+chk_prefix =/marconi_scratch/userexternal/znazari0/axion4/M1/phi03/M1_phi03_
+plot_prefix =/marconi_scratch/userexternal/znazari0/axion4/M1/phi03/M1_phi03_P_
 initial_data_prefix = Oscilloton_data_iso/
 #restart_file = M1_phi03_000270.3d.hdf5
 
@@ -18,7 +18,7 @@ L = 64
 
 # Regridding
 # Thresholds on the change across a cell which prompts regrid
-regrid_threshold = 0.9
+regrid_threshold = 0.5
 tag_buffer_size = 0
 
 # Level data

@@ -2,7 +2,6 @@
 #SBATCH --nodes=2
 #SBATCH --ntasks-per-node=12
 #SBATCH --partition=skl_usr_prod
-#SBATCH --mem=182000
 #SBATCH -A ict20_hep
 #SBATCH --time=24:00:00
 #SBATCH --cpus-per-task=4

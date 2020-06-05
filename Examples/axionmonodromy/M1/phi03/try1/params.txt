@@ -18,8 +18,8 @@ L = 64
 
 # Regridding
 # Thresholds on the change across a cell which prompts regrid
-regrid_threshold = 0.9
-tag_buffer_size = 0
+regrid_threshold = 0.1
+tag_buffer_cells = 0
 
 # Level data
 # Maximum number of times you can regrid above coarsest level

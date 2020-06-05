@@ -18,7 +18,7 @@ L = 64
 
 # Regridding
 # Thresholds on the change across a cell which prompts regrid
-regrid_threshold = 0.9
+regrid_threshold = 0.5
 tag_buffer_size = 0
 
 # Level data
