@@ -1,10 +1,10 @@
 #Params for runtime inputs
 
 verbosity = 0
-chk_prefix =/marconi_scratch/userexternal/znazari0/axion/M2/phi03/M2_phi03_
-plot_prefix =/marconi_scratch/userexternal/znazari0/axion/M2/phi03/M2_phi03_P_
+chk_prefix =/marconi_scratch/userexternal/znazari0/axion2/M1/phi04/M1_phi04_
+plot_prefix =/marconi_scratch/userexternal/znazari0/axion2/M1/phi04/M1_phi04_P_
 initial_data_prefix = Oscilloton_data_iso/
-#restart_file = M2_phi03_000270.3d.hdf5
+#restart_file = M1_phi04_000270.3d.hdf5
 
 # Set up grid spacings and regrid params
 # NB - the N values need to be multiples of block_factor
@@ -68,7 +68,7 @@ sigma = 1.0
 G_Newton = 1.0
 
 # SF Initial data
-overall_normalization = 2.0
+overall_normalization = 1.0
 decay_constant = 1.0
 sign_of_Pi = +1
 

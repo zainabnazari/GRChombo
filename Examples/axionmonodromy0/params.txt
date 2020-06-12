@@ -1,10 +1,10 @@
 #Params for runtime inputs
 
 verbosity = 0
-chk_prefix =/marconi_scratch/userexternal/znazari0/axion/M2/phi03/M2_phi03_
-plot_prefix =/marconi_scratch/userexternal/znazari0/axion/M2/phi03/M2_phi03_P_
-initial_data_prefix = Oscilloton_data_iso/
-#restart_file = M2_phi03_000270.3d.hdf5
+chk_prefix = /marconi_scratch/userexternal/znazari0/tanh/T02N64_phi03_
+plot_prefix=/marconi_scratch/userexternal/znazari0/tanh/T02N64_phi03_P_
+initial_data_prefix = /marconi/home/userexternal/znazari0/GRChombo/InitialDataOscillotons/phi0.4/
+#restart_file = T02N64_phi03_000370.3d.hdf5
 
 # Set up grid spacings and regrid params
 # NB - the N values need to be multiples of block_factor
@@ -19,7 +19,7 @@ L = 64
 # Regridding
 # Thresholds on the change across a cell which prompts regrid
 regrid_threshold = 0.5
-tag_buffer_size = 0
+tag_buffer_cells = 0
 
 # Level data
 # Maximum number of times you can regrid above coarsest level
@@ -68,7 +68,7 @@ sigma = 1.0
 G_Newton = 1.0
 
 # SF Initial data
-overall_normalization = 2.0
+overall_normalization = 0.2
 decay_constant = 1.0
 sign_of_Pi = +1
 
