@@ -4,7 +4,7 @@ verbosity = 0
 chk_prefix =/marconi_scratch/userexternal/znazari0/axion/M1/phi01N256/M1_phi01N256_
 plot_prefix =/marconi_scratch/userexternal/znazari0/axion/M1/phi01N256/M1_phi01N256_P_
 initial_data_prefix = Oscilloton_data_iso/
-#restart_file = M1_phi03_000270.3d.hdf5
+restart_file =/marconi_scratch/userexternal/znazari0/axion/M1/phi01N256/M1_phi01N256_001650.3d.hdf5
 
 # Set up grid spacings and regrid params
 # NB - the N values need to be multiples of block_factor

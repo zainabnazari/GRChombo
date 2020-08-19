@@ -1,8 +1,8 @@
 #Params for runtime inputs
 
 verbosity = 0
-chk_prefix =/marconi_scratch/userexternal/znazari0/axion1/M01/phi02N32/M01_phi02N32_
-plot_prefix =/marconi_scratch/userexternal/znazari0/axion1/M01/phi02N32/M01_phi02N32_P_
+chk_prefix =/marconi_scratch/userexternal/znazari0/axion1/M01/phi02N32hnode/M01_phi02N32_
+plot_prefix =/marconi_scratch/userexternal/znazari0/axion1/M01/phi02N32hnode/M01_phi02N32_P_
 initial_data_prefix = Oscilloton_data_iso/
 #restart_file = M1_phi03_000270.3d.hdf5
 
