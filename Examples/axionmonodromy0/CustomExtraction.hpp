@@ -24,7 +24,7 @@ class CustomExtraction
     //! Params for extraction
     const int m_comp1 = c_chi;
     const int m_comp2 = c_phi;
-    const int m_comp3 = c_lapse;
+    const int m_comp3 = c_Ham;
     const double m_L;
     const std::array<double, CH_SPACEDIM> m_center;
     const double m_time;
@@ -85,7 +85,7 @@ class CustomExtraction
             std::vector<std::string> header1_strings(num_comps*num_points);
             header1_strings[0] = "chi";
             header1_strings[1] = "phi";
-            header1_strings[2] = "lapse";
+            header1_strings[2] = "Ham";
             extraction_file.write_header_line(header1_strings);
         }
         std::vector<double> data_for_writing(num_comps*num_points);

@@ -46,9 +46,9 @@ enum
     c_phi, // matter field added
     c_Pi,  //(minus) conjugate momentum
 
+    c_absHam,
+    c_absHamTot,
     c_Ham,
-    c_Omega,
-    c_VofPhi,
 
     c_Mom1,
     c_Mom2,
@@ -80,7 +80,7 @@ static constexpr char const *variable_names[NUM_VARS] = {
 
     "phi",    "Pi",
 
-    "Ham",    "Omega",    "VofPhi",
+    "absHam",    "absHamTot",    "Ham",
 
     "Mom1",   "Mom2",   "Mom3"};
 }
