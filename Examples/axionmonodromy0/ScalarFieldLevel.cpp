@@ -16,6 +16,7 @@
 
 // For constraints calculation and AH finder
 #include "MatterConstraints2.hpp"
+#include "ExcisionHam.hpp"
 //#include "SphericalHorizon.hpp"
 
 // For tag cells
@@ -47,51 +48,60 @@ void ScalarFieldLevel::specificAdvance()
 // Initial data for field and metric variables
 void ScalarFieldLevel::initialData()
 {
-     CH_TIME("ScalarFieldLevel::initialData");
-     if (m_verbosity)
-        pout() << "ScalarFieldLevel::initialData " << m_level << endl;
+    CH_TIME("ScalarFieldLevel::initialData");
+    if (m_verbosity)
+       pout() << "ScalarFieldLevel::initialData " << m_level << endl;
 
-     // information about the csv file data
-     int lines = 100002;
-     double spacing = 0.01; // in r for the values
+    // information about the csv file data
+    int lines = 100002;
+    double spacing = 0.01; // in r for the values
 
-     std::array<double, 3> tmp = {0.0};
-     std::vector<double> lapse_values, psi_values, Pi_values;
+    std::array<double, 3> tmp = {0.0};
+    std::vector<double> lapse_values, psi_values, Pi_values;
 
-     std::string lapse_file(m_p.initial_data_prefix + "alpha001.csv");
-     ifstream ifs0(lapse_file);
+    std::string lapse_file(m_p.initial_data_prefix + "alpha001.csv");
+    ifstream ifs0(lapse_file);
 
-     std::string psi_file(m_p.initial_data_prefix + "psi001.csv");
-     ifstream ifs1(psi_file);
+    std::string psi_file(m_p.initial_data_prefix + "psi001.csv");
+    ifstream ifs1(psi_file);
 
-     std::string Pi_file(m_p.initial_data_prefix + "Pi001.csv");
-     ifstream ifs2(Pi_file);
+    std::string Pi_file(m_p.initial_data_prefix + "Pi001.csv");
+    ifstream ifs2(Pi_file);
 
-     for (int i = 0; i < lines; ++i)
-     {
-           ifs0 >> tmp[0];
-           ifs1 >> tmp[1];
-           ifs2 >> tmp[2];
+    for (int i = 0; i < lines; ++i)
+    {
+        ifs0 >> tmp[0];
+        ifs1 >> tmp[1];
+        ifs2 >> tmp[2];
 
-           lapse_values.push_back(tmp[0]);
-           psi_values.push_back(tmp[1]);
-           Pi_values.push_back(tmp[2]);
-     }
+        lapse_values.push_back(tmp[0]);
+        psi_values.push_back(tmp[1]);
+        Pi_values.push_back(tmp[2]);
+    }
 
-     // First set everything to zero ... we don't want undefined values in constraints etc 
-     BoxLoops::loop(SetValue(0.0), m_state_new, m_state_new, FILL_GHOST_CELLS);
+    // First set everything to zero ... we don't want undefined values in constraints etc 
+    BoxLoops::loop(SetValue(0.0), m_state_new, m_state_new, FILL_GHOST_CELLS);
 
-     // Initial conditions for scalar field - Oscilloton
-     BoxLoops::loop(OscillotonInitial(m_p.L, m_dx, m_p.sign_of_Pi, m_p.center,
+    // Initial conditions for scalar field - Oscilloton
+    BoxLoops::loop(OscillotonInitial(m_p.L, m_dx, m_p.sign_of_Pi, m_p.center,
           spacing, lapse_values, psi_values, Pi_values),
         m_state_new, m_state_new, FILL_GHOST_CELLS, disable_simd());
 
-     // setup the output file
-     SmallDataIO integral_file("HamIntegrals", m_dt, m_time,
+    // setup the output file
+    SmallDataIO integral_file("HamIntegrals", m_dt, m_time,
                            m_restart_time, SmallDataIO::APPEND, true);
-     std::vector<std::string> header_strings = {"absHam", "absHamTot"};
-     integral_file.write_header_line(header_strings);
+    std::vector<std::string> header_strings = {"absHam", "absHamTot"};
+    integral_file.write_header_line(header_strings);
 
+    // calculate the Ham
+    fillAllGhosts();
+    Potential potential(m_p.potential_params);
+    ScalarFieldWithPotential scalar_field(potential);
+    BoxLoops::loop(MatterConstraints2<ScalarFieldWithPotential>(
+                       scalar_field, m_dx, m_p.G_Newton),
+                   m_state_new, m_state_new, EXCLUDE_GHOST_CELLS);
+    BoxLoops::loop(ExcisionHam(m_dx, m_p.center),
+               m_state_new, m_state_new, EXCLUDE_GHOST_CELLS, disable_simd());
 }
 
 // Things to do before outputting a checkpoint file
@@ -110,39 +120,21 @@ void ScalarFieldLevel::prePlotLevel()
 // Things to do before outputting a checkpoint file
 void ScalarFieldLevel::preCheckpointLevel()
 {
-    if(m_time == 0.0)
+    if(m_time == 0.0 && m_level == 0)
     {
-        // calculate the Ham
         fillAllGhosts();
-        Potential potential(m_p.potential_params);
-        ScalarFieldWithPotential scalar_field(potential);
-        BoxLoops::loop(MatterConstraints2<ScalarFieldWithPotential>(
-                       scalar_field, m_dx, m_p.G_Newton),
-                   m_state_new, m_state_new, EXCLUDE_GHOST_CELLS);
+        // integrate the densities and write to a file
+        double Ham_sum = m_gr_amr.compute_sum(c_absHam, m_p.coarsest_dx);
+        double HamTot_sum = m_gr_amr.compute_sum(c_absHamTot, m_p.coarsest_dx);
 
-        if (m_level == m_p.min_level)
-        {
-            // integrate the densities and write to a file
-            double Ham_sum = m_gr_amr.compute_sum(c_absHam, m_p.coarsest_dx);
-            double HamTot_sum = m_gr_amr.compute_sum(c_absHamTot, m_p.coarsest_dx);
-
-            SmallDataIO integral_file("HamIntegrals", m_dt, m_time,
+        SmallDataIO integral_file("HamIntegrals", m_dt, m_time,
                                   m_restart_time, SmallDataIO::APPEND, false);
 
-            // remove any duplicate data if this is post restart
-            integral_file.remove_duplicate_time_data();
-            std::vector<double> data_for_writing = {Ham_sum, HamTot_sum};
-            // write data
-            integral_file.write_time_data_line(data_for_writing);
-
-/*        m_gr_amr.m_interpolator->refresh();
-        CustomExtraction my_extraction(m_p.L, m_p.center, 
-                                       m_time, m_dt, m_restart_time);
-        std::string extraction_filename = m_p.checkpoint_prefix + "Extraction.txt";
-        my_extraction.execute_query(m_gr_amr.m_interpolator,
-           extraction_filename);
-*/
-        }
+        // remove any duplicate data if this is post restart
+        integral_file.remove_duplicate_time_data();
+        std::vector<double> data_for_writing = {Ham_sum, HamTot_sum};
+        // write data
+        integral_file.write_time_data_line(data_for_writing);
     }
 }
 
@@ -198,6 +190,8 @@ void ScalarFieldLevel::specificPostTimeStep()
         BoxLoops::loop(MatterConstraints2<ScalarFieldWithPotential>(
                        scalar_field, m_dx, m_p.G_Newton),
                    m_state_new, m_state_new, EXCLUDE_GHOST_CELLS);
+        BoxLoops::loop(ExcisionHam(m_dx, m_p.center),
+                   m_state_new, m_state_new, EXCLUDE_GHOST_CELLS, disable_simd());
     }
 
     if (m_level == 0) //(m_p.min_level))

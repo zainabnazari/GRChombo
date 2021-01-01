@@ -89,7 +89,7 @@ void ScalarFieldLevel::initialData()
 // Things to do before outputting a checkpoint file
 void ScalarFieldLevel::prePlotLevel()
 {
-    fillAllGhosts();
+/*    fillAllGhosts();
     Potential potential(m_p.potential_params);
     ScalarFieldWithPotential scalar_field(potential);
     BoxLoops::loop(MatterConstraints<ScalarFieldWithPotential>(
@@ -97,15 +97,16 @@ void ScalarFieldLevel::prePlotLevel()
                    m_state_new, m_state_new, EXCLUDE_GHOST_CELLS);
     BoxLoops::loop(SphericalHorizon(m_dx, m_p.center, potential),
                    m_state_new, m_state_new, EXCLUDE_GHOST_CELLS);
+*/
 }
 
 // Things to do before outputting a checkpoint file
 void ScalarFieldLevel::preCheckpointLevel()
 {
-    fillAllGhosts();
-    Potential potential(m_p.potential_params);
-    BoxLoops::loop(SphericalHorizon(m_dx, m_p.center, potential),
-                   m_state_new, m_state_new, EXCLUDE_GHOST_CELLS);
+//    fillAllGhosts();
+//    Potential potential(m_p.potential_params);
+//    BoxLoops::loop(SphericalHorizon(m_dx, m_p.center, potential),
+//                   m_state_new, m_state_new, EXCLUDE_GHOST_CELLS);
 }
 
 // Things to do in RHS update, at each RK4 step
@@ -143,11 +144,12 @@ void ScalarFieldLevel::specificUpdateODE(GRLevelData &a_soln,
 void ScalarFieldLevel::specificWritePlotHeader(
     std::vector<int> &plot_states) const
 {
-    plot_states = {c_phi, c_chi, c_lapse, c_Ham, c_VofPhi};
+    plot_states = {c_phi, c_chi, c_Pi};
 }
 
 void ScalarFieldLevel::specificPostTimeStep()
 {
+/*
     if (m_level == (m_p.min_level))
     {
         m_gr_amr.m_interpolator->refresh();
@@ -157,6 +159,7 @@ void ScalarFieldLevel::specificPostTimeStep()
         my_extraction.execute_query(m_gr_amr.m_interpolator,
            extraction_filename);
     }
+*/
 }
 
 void ScalarFieldLevel::computeTaggingCriterion(FArrayBox &tagging_criterion,
